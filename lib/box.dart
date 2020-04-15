@@ -1,6 +1,7 @@
 import 'package:covid/main.dart';
 import 'package:covid/screensize_reducer.dart';
 import 'package:flutter/material.dart';
+import 'package:covid/constants.dart';
 
 class DetailBox extends StatefulWidget {
   DetailBox({Key key, this.category, this.url, this.icon, this.alignment}) : super(key: key);
@@ -23,15 +24,11 @@ class _DetailBoxState extends State<DetailBox> {
       height: screenHeight(context, dividedBy: 5),
       width: screenWidth(context, dividedBy: 2) - 20,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [box_gradient_top, box_gradient_bottom]
-      ),
-      color: primary,
+        gradient: box_background,
+        color: primary,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-              color: Colors.white, style: BorderStyle.solid, width: 1)),
+        boxShadow: outer_shadow,
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,

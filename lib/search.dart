@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:covid/constants.dart';
+
 
 class SearchBar extends StatefulWidget {
   SearchBar({Key key}) : super(key: key);
@@ -10,25 +12,32 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
-        child: TextField(
-          decoration: new InputDecoration(
-            hintText: "Search for Country",
-            prefixIcon: new Icon(Icons.search),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30.0)),
-              borderSide: BorderSide(color: Colors.grey),
+
+    return Column(
+      children: <Widget>[
+        Center(
+          child: Text("Covid 19"),
+        ),
+        Center(
+         child:
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            decoration: BoxDecoration(
+              color: search_bar_colour,
+              boxShadow: inner_shadow,
+              borderRadius: BorderRadius.circular(30.0)
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30.0)),
-              borderSide: BorderSide(color: Colors.grey),
+            child: TextField(
+              decoration: new InputDecoration(
+                hintText: "Search for Country",
+                prefixIcon: new Icon(Icons.search),
+                disabledBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
