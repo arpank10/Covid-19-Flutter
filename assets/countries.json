@@ -1,5 +1,10 @@
 [
   {
+    "Country": "Global",
+    "Slug": "global",
+    "ISO2": "WL"
+  },
+  {
     "Country": "Senegal",
     "Slug": "senegal",
     "ISO2": "SN"

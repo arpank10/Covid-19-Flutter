@@ -1,3 +1,4 @@
+import 'package:covid/Database/database_client.dart';
 import 'package:covid/bottom_nav.dart';
 import 'package:covid/box.dart';
 import 'package:covid/custom_icons.dart';
@@ -13,9 +14,11 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  final DatabaseClient db = DatabaseClient.instance;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    populateDatabase(context);
     return MaterialApp(
       title: 'Covid 19',
       theme: ThemeData(
@@ -37,6 +40,10 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(title: 'Covid 19'),
     );
+  }
+
+  void populateDatabase(BuildContext context) async {
+    await db.populateCountries(context);
   }
 }
 
