@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 class Country {
-  int id;
   @required
   String country;
   @required
@@ -19,7 +18,6 @@ class Country {
   Country();
 
   static final columns = [
-    "id",
     "country",
     "slug",
     "iso2",
@@ -32,7 +30,6 @@ class Country {
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
-    map['id'] = id;
     map['country'] = country;
     map['slug'] = slug;
     map['iso2'] = iso2;
@@ -47,7 +44,6 @@ class Country {
 
   static fromMap(Map map) {
     Country country = new Country();
-    country.id = map['id'];
     country.country = map['country'];
     country.slug = map['slug'];
     country.iso2 = map['iso2'];
@@ -71,6 +67,21 @@ class Country {
     country.totalDeaths = 0;
     country.newRecovered = 0;
     country.totalRecovered = 0;
+    return country;
+  }
+
+  factory Country.fromJsonData(dynamic json) {
+    Country country = new Country();
+    country.country = json['Country'];
+    country.slug = json['Slug'];
+    country.iso2 = json['CountryCode'];
+    //Add id.
+    country.newConfirmed = json['NewConfirmed'];
+    country.totalConfirmed = json['TotalConfirmed'];
+    country.newDeaths = json['NewDeaths'];
+    country.totalDeaths = json['TotalDeaths'];
+    country.newRecovered = json['NewRecovered'];
+    country.totalRecovered = json['TotalRecovered'];
     return country;
   }
 

@@ -15,6 +15,10 @@ const box_gradient_bottom = const Color(0xff121212);
 const orange = const Color(0xffF37C4A);
 const primary_text = const Color(0xffE0E0E0);
 const secondary_text =  Color.fromRGBO(224, 224, 224, 0.5);
+const deceased_text = Color.fromRGBO(214, 53, 53, 0.5);
+const recovered_text = Color.fromRGBO(39, 174, 96, 0.5);
+const active_text = Color.fromRGBO(45, 156, 219, 0.5);
+
 const faded_orange =  Color.fromRGBO(243, 124, 74, 0.75);
 const quote = "'You can't recognize good times, if you don't have bad ones.'";
 const stay = "Stay Home, Stay Safe";

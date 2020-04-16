@@ -1,4 +1,6 @@
+import 'package:covid/Database/country.dart';
 import 'package:covid/Database/database_client.dart';
+import 'package:covid/api.dart';
 import 'package:covid/bottom_nav.dart';
 import 'package:covid/box.dart';
 import 'package:covid/custom_icons.dart';
@@ -8,17 +10,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:covid/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final DatabaseClient db = DatabaseClient.instance;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    populateDatabase(context);
     return MaterialApp(
       title: 'Covid 19',
       theme: ThemeData(
@@ -41,10 +42,6 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(title: 'Covid 19'),
     );
   }
-
-  void populateDatabase(BuildContext context) async {
-    await db.populateCountries(context);
-  }
 }
 
 class MyHomePage extends StatefulWidget {
@@ -57,6 +54,26 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String country = "india";
+  Future<Country> futureCountry;
+  final DatabaseClient db = DatabaseClient.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAllStats();
+    populateDatabase(context);
+    futureCountry = db.fetchCountry(country);
+  }
+  void populateDatabase(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isFirstTime = await prefs.getBool('firstTime') ?? true;
+    if(isFirstTime){
+      prefs.setBool('firstTime', false);
+      await db.populateCountries(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -74,42 +91,16 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 SearchBar(),
                 Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    country
+                  ),
+                ),
+                Padding(
                   padding: const EdgeInsets.fromLTRB(0.0,40.0,0.0,15.0),
                   child: Center(
-                      child: Column(children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        DetailBox(
-                            category: "Infected",
-                            url: "infected",
-                            icon: CustomIcon.corona,
-                            alignment: TextAlign.left,
-                        ),
-                        DetailBox(
-                            category: "Deceased",
-                            url: "infected",
-                            icon: CustomIcon.dead,
-                            alignment: TextAlign.right,
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        DetailBox(
-                            category: "Recovered",
-                            url: "infected",
-                            icon: CustomIcon.recovered,
-                            alignment: TextAlign.left
-                        ),
-                        DetailBox(
-                            category: "Active",
-                            url: "infected",
-                            icon: CustomIcon.active,
-                            alignment: TextAlign.right,
-                        )
-                      ],
-                    ),
-                  ])),
+                    child: getCountryBoxes(),
+                  ),
                 ),
                 Expanded(
                   flex: 9,
@@ -147,5 +138,95 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+
+  Widget getCountryBoxes(){
+    return FutureBuilder<Country>(
+      future: futureCountry,
+      builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        print("Data");
+        print(snapshot.data);
+        return  Column(children: <Widget>[
+          Row(
+            children: <Widget>[
+            DetailBox(
+              category: "Infected",
+              increasedCount: snapshot.data.newConfirmed.toString(),
+              totalCount: snapshot.data.totalConfirmed.toString(),
+              icon: CustomIcon.corona,
+              alignment: TextAlign.left,
+            ),
+            DetailBox(
+              category: "Deceased",
+              increasedCount: snapshot.data.newDeaths.toString(),
+              totalCount: snapshot.data.totalDeaths.toString(),
+              icon: CustomIcon.dead,
+              alignment: TextAlign.right,
+            )
+            ],
+          ),
+          Row(
+            children: <Widget>[
+            DetailBox(
+              category: "Recovered",
+              increasedCount: snapshot.data.newRecovered.toString(),
+              totalCount: snapshot.data.totalRecovered.toString(),
+              icon: CustomIcon.recovered,
+              alignment: TextAlign.left
+            ),
+            DetailBox(
+              category: "Active",
+              increasedCount: snapshot.data.newConfirmed.toString(),
+              totalCount: snapshot.data.totalConfirmed.toString(),
+              icon: CustomIcon.active,
+              alignment: TextAlign.right,
+            )
+            ],
+          ),
+        ]);
+      } else {
+        print("NO data");
+        return  Column(children: <Widget>[
+          Row(
+            children: <Widget>[
+              DetailBox(
+                category: "Infected",
+                increasedCount: "0",
+                totalCount: "0",
+                icon: CustomIcon.corona,
+                alignment: TextAlign.left,
+              ),
+              DetailBox(
+                category: "Deceased",
+                increasedCount: "0",
+                totalCount: "0",
+                icon: CustomIcon.dead,
+                alignment: TextAlign.right,
+              )
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              DetailBox(
+                category: "Recovered",
+                increasedCount: "0",
+                totalCount: "0",
+                icon: CustomIcon.recovered,
+                alignment: TextAlign.left
+              ),
+              DetailBox(
+                category: "Active",
+                increasedCount: "0",
+                totalCount: "0",
+                icon: CustomIcon.active,
+                alignment: TextAlign.right,
+              )
+            ],
+          ),
+        ]);
+      }
+      return CircularProgressIndicator();
+    });
   }
 }

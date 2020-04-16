@@ -36,8 +36,7 @@ class DatabaseClient {
   Future _create(Database db, int version) async {
     await db.execute("""
             CREATE TABLE country (
-              id INTEGER PRIMARY KEY AUTOINCREMENT,
-              country TEXT NOT NULL,
+              country TEXT PRIMARY KEY,
               slug TEXT NOT NULL,
               iso2 TEXT NOT NULL,
               newConfirmed INTEGER NOT NULL,
@@ -59,35 +58,40 @@ class DatabaseClient {
     List<Country> countries = countryObjects.map((countryJson) => Country.fromJson(countryJson)).toList();
 
     countries.forEach((element) async {
-      await upsertCountry(element);
+      await insertCountry(element);
     });
   }
 
-  Future<Country> upsertCountry(Country country) async {
-    if(country.id == null){
-      country.id = await _db.insert(countryTableName, country.toMap());
-    }
-    else {
-      await _db.update(countryTableName, country.toMap(), where: "id = ?", whereArgs: [country.id]);
-    }
+  Future<Country> insertCountry(Country country) async {
+    await create();
+    await _db.insert(countryTableName, country.toMap());
     return country;
   }
 
-  Future<Country> fetchCountry(int id) async {
-    List<Map> results = await _db.query(countryTableName, columns: Country.columns, where: "id = ?", whereArgs: [id]);
-    Country country = Country.fromMap(results[0]);
+  Future<Country> updateCountry(Country country) async {
+    await create();
+    await _db.update(countryTableName, country.toMap(), where: "slug = ?", whereArgs: [country.slug]);
+    return country;
+  }
 
+  Future<Country> fetchCountry(String slug) async {
+    await create();
+    List<Map> results = await _db.query(countryTableName, columns: Country.columns, where: "slug = ?", whereArgs: [slug]);
+    Country country = Country.fromMap(results[0]);
+    print(slug);
+    print(country.country);
+    print(country.slug);
     return country;
   }
 
   Future<List<Country>> fetchAllCountries() async {
+    await create();
     List<Map> results = await _db.query(countryTableName, columns: Country.columns);
     List<Country> countries = new List();
     results.forEach((element) {
       Country country = Country.fromMap(element);
       countries.add(country);
     });
-
     return countries;
   }
 }
