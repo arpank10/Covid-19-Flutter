@@ -1,5 +1,6 @@
-import 'package:covid/custom_icons.dart';
-import 'package:covid/icon_box.dart';
+import 'file:///E:/Android/Self/covid/lib/Widgets/custom_icons.dart';
+import 'file:///E:/Android/Self/covid/lib/Widgets/icon_box.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:covid/constants.dart';
 import 'package:covid/screensize_reducer.dart';
@@ -18,8 +19,7 @@ class _BottomNavState extends State<BottomNav> {
   @override
   Widget build(BuildContext context) {
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20.0),
+    return Container(
       child: Stack(
           children: <Widget>[
             Container(
@@ -33,8 +33,9 @@ class _BottomNavState extends State<BottomNav> {
                 ],
               ),
             ),
-            Positioned(
-              bottom: 0.0,
+            Container(
+              margin: EdgeInsets.only(top: screenHeight(context, dividedBy: propBottomIcon*2)
+              + screenHeight(context, dividedBy: propPaddingSmall)),
               child: SvgPicture.asset(
                 'assets/bottom_wave.svg',
                 width: screenWidth(context),

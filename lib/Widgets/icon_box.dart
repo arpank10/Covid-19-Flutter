@@ -29,8 +29,8 @@ class _IconBoxState extends State<IconBox> {
     // TODO: implement build
     return Container(
       margin: EdgeInsets.all(10.0),
-      height: bottomIconSize,
-      width: bottomIconSize,
+      height: screenHeight(context, dividedBy: propBottomIcon),
+      width: screenHeight(context, dividedBy: propBottomIcon),
       decoration: BoxDecoration(
         gradient: box_background,
         color: primary,
@@ -40,6 +40,7 @@ class _IconBoxState extends State<IconBox> {
       child: Center(
         child: Icon(
           widget.icon,
+          size: screenHeight(context, dividedBy: propBottomIcon*2.0),
           color: faded_orange,
         ),
       ),

@@ -4,7 +4,7 @@ import 'package:covid/screensize_reducer.dart';
 import 'package:flutter/material.dart';
 import 'package:covid/constants.dart';
 
-import 'Database/database_client.dart';
+import '../Database/database_client.dart';
 
 class DetailBox extends StatefulWidget {
   DetailBox({Key key, this.category, this.increasedCount, this.totalCount, this.icon, this.alignment, String country}) : super(key: key);
@@ -38,9 +38,10 @@ class _DetailBoxState extends State<DetailBox> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-      margin: EdgeInsets.all(10.0),
-      height: screenHeight(context, dividedBy: 5),
-      width: screenWidth(context, dividedBy: 2) - 20,
+      margin: EdgeInsets.symmetric(vertical :screenHeight(context, dividedBy: propPaddingLarge)
+        , horizontal: screenHeight(context, dividedBy: propPaddingLarge)),
+      height: screenHeight(context, dividedBy: propStatIndividualBox),
+      width: screenWidth(context, dividedBy: 2) - screenHeight(context, dividedBy: propPaddingLarge)*2,
       decoration: BoxDecoration(
         gradient: box_background,
         color: primary,

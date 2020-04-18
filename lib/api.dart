@@ -20,8 +20,24 @@ Future<void> fetchAllStats() async {
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
+    Country global = new Country();
+    global.country = "Global";
+    global.slug = "global";
+    global.iso2 = "WL";
+
+    var globalObject = jsonDecode(response.body)['Global'];
+    global.newConfirmed = globalObject['NewConfirmed'];
+    global.totalConfirmed = globalObject['TotalConfirmed'];
+    global.newDeaths = globalObject['NewDeaths'];
+    global.totalDeaths = globalObject['TotalDeaths'];
+    global.newRecovered = globalObject['NewRecovered'];
+    global.totalRecovered = globalObject['TotalRecovered'];
+
+
     var countryObjects = jsonDecode(response.body)['Countries'] as List;
+
     List<Country> countries = countryObjects.map((countryJson) => Country.fromJsonData(countryJson)).toList();
+    countries.add(global);
 
     countries.forEach((element) async {
       db.updateCountry(element);
