@@ -1,10 +1,10 @@
 import 'package:covid/Database/country.dart';
 import 'package:covid/Database/database_client.dart';
+import 'package:covid/Widgets/bottom_nav.dart';
+import 'package:covid/Widgets/box.dart';
+import 'package:covid/Widgets/custom_icons.dart';
 import 'package:covid/Widgets/search.dart';
 import 'package:covid/api.dart';
-import 'file:///E:/Android/Self/covid/lib/Widgets/bottom_nav.dart';
-import 'file:///E:/Android/Self/covid/lib/Widgets/box.dart';
-import 'file:///E:/Android/Self/covid/lib/Widgets/custom_icons.dart';
 import 'package:covid/screensize_reducer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +22,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  IconData _currentSelected = CustomIcon.home;
   Country country;
   Future<Country> futureCountry;
   final DatabaseClient db = DatabaseClient.instance;
@@ -29,7 +30,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    fetchAllStats();
+    fetchAllStats().then((value) => this.loadStats());
     populateDatabase(context);
     loadStats();
   }
@@ -49,9 +50,7 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Container(
-//                  color: Colors.cyan,
                   margin: EdgeInsets.only(top: screenHeight(context, dividedBy: propPaddingLarge)),
-//                  height: screenHeight(context, dividedBy: propSearchElement),
                   child: SearchBar(
                     onCountrySelected: (Country value){
                       print(value.country);
@@ -61,7 +60,6 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Container(
-//                  color: Colors.white,
                   margin: EdgeInsets.symmetric(horizontal: screenHeight(context, dividedBy: propPaddingLarge)),
                   height: screenHeight(context, dividedBy: propCurrentCountry),
                   child: Row(
@@ -88,16 +86,15 @@ class _HomeState extends State<Home> {
                     ],
                   ),
                 ),
-                Container(
-//                  color: Colors.amber,
-//                  height: screenHeight(context, dividedBy: 2.5),
-                  child: Center(
-                    child: getCountryBoxes(),
+                Visibility(
+                  visible: _currentSelected == CustomIcon.home,
+                  child: Container(
+                    child: Center(
+                      child: getCountryBoxes(),
+                    ),
                   ),
                 ),
                 Container(
-//                  color: Colors.orange,
-//                  margin: EdgeInsets.only(top: screenHeight(context, dividedBy: propPaddingSmall)),
                   height: screenHeight(context, dividedBy: propBottomElement),
                   child: SvgPicture.asset(
                     'assets/wave.svg',
@@ -106,7 +103,6 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Container(
-//                  color: Colors.yellow,
                   margin: EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: propPaddingSmall)),
                   height: screenHeight(context, dividedBy: propBottomElement),
                   child: Column(
@@ -131,7 +127,16 @@ class _HomeState extends State<Home> {
                 Container(
                   margin: EdgeInsets.only(bottom: screenHeight(context, dividedBy: propPaddingLarge)),
                   height: screenHeight(context, dividedBy: propBottomNavBar),
-                  child: BottomNav())
+                  child: BottomNav(
+                    onIconSelected: (IconData data){
+                      if(_currentSelected!=data){
+                        setState(() {
+                          _currentSelected = data;
+                        });
+                        print("Selection changed");
+                      }
+                    },
+                  ))
               ],
             ),
           ),
