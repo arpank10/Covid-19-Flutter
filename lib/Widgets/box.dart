@@ -26,12 +26,6 @@ class _DetailBoxState extends State<DetailBox> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    switch(widget.category){
-      case "Infected": textColor = primary_text;break;
-      case "Deceased": textColor = deceased_text;break;
-      case "Recovered": textColor = recovered_text;break;
-      case "Active": textColor = active_text;break;
-    }
   }
 
   @override

@@ -31,14 +31,28 @@ class _TextBoxState extends State<TextBox> {
         width: screenHeight(context, dividedBy: propTextBox),
         decoration: BoxDecoration(
           gradient: box_background,
-          color: primary,
           borderRadius: BorderRadius.circular(15),
           boxShadow: widget.active?inner_icon_shadow:outer_icon_shadow,
         ),
         child: Center(
-          child: Text(widget.text),
+          child: Text(
+            widget.text,
+            style: TextStyle(color: getColorOfLine()),
+          ),
         ),
       ),
     );
   }
+
+  Color getColorOfLine(){
+    Color lineColor = infected_text;
+    switch(widget.text){
+      case "D": lineColor = secondary_text;break;
+      case "R": lineColor = recovered_text;break;
+      case "A": lineColor = active_text;break;
+      default: lineColor = infected_text;
+    }
+    return lineColor;
+  }
+
 }
