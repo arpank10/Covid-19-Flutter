@@ -1,4 +1,3 @@
-import 'package:covid/main.dart';
 import 'package:covid/screensize_reducer.dart';
 import 'package:flutter/material.dart';
 import 'package:covid/constants.dart';

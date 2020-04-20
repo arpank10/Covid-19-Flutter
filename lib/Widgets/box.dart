@@ -1,10 +1,7 @@
-import 'package:covid/Database/country.dart';
-import 'package:covid/main.dart';
 import 'package:covid/screensize_reducer.dart';
 import 'package:flutter/material.dart';
 import 'package:covid/constants.dart';
 
-import '../Database/database_client.dart';
 
 class DetailBox extends StatefulWidget {
   DetailBox({Key key, this.category, this.increasedCount, this.totalCount, this.icon, this.alignment, String country}) : super(key: key);

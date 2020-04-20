@@ -2,9 +2,7 @@ import 'package:covid/Database/country.dart';
 import 'package:covid/Database/database_client.dart';
 import 'package:covid/Widgets/box.dart';
 import 'package:covid/Widgets/custom_icons.dart';
-import 'package:covid/screensize_reducer.dart';
 import 'package:flutter/material.dart';
-import 'package:covid/constants.dart';
 
 class StatBox extends StatefulWidget {
   StatBox({Key key,
@@ -121,7 +119,6 @@ class _StatBoxState extends State<StatBox> {
             ),
           ]);
         }
-        return CircularProgressIndicator();
       });
   }
 

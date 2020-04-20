@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:covid/Database/cases.dart';
 import 'package:covid/Database/database_client.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'Database/country.dart';

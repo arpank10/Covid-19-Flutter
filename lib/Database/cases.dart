@@ -20,5 +20,5 @@ class CaseCount {
   int recovered;
   int active;
 
-  CaseCount(){}
+  CaseCount();
 }

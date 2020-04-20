@@ -1,4 +1,3 @@
-import 'package:covid/screensize_reducer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

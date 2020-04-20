@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:covid/Database/cases.dart';
 import 'package:covid/Database/country.dart';
 import 'package:covid/Widgets/text_box.dart';
@@ -164,7 +166,8 @@ class _GraphState extends State<Graph> {
             if(_caseStat == null) print("NULL");
             else print("NOT NULL");
             if(snapshot.hasData && _countryStat!=null){
-              return getLineChart();
+//              return getLineChart();
+              return getBarChart();
             }
             return Center(
               child: CircularProgressIndicator(),
@@ -257,26 +260,89 @@ class _GraphState extends State<Graph> {
         minY: minCount.toDouble(),
         maxY: maxCount.toDouble() + 5.0,
         titlesData: FlTitlesData(
-          bottomTitles: SideTitles(
-            showTitles: true,
-            textStyle: TextStyle(fontSize: 10, color: primary_text, fontWeight: FontWeight.bold),
-            getTitles: (value) => getBottomTitle(value.toInt())
-          ),
-          leftTitles: SideTitles(
-            reservedSize: 30,
-            interval: interval.toDouble(),
-            showTitles: true,
-            textStyle: TextStyle(fontSize: 8, color: primary_text, fontWeight: FontWeight.normal),
-            getTitles: (value) => getSideTitle(value.toInt(), minCount, maxCount)
-          ),
+          bottomTitles: getBottomTitles(),
+          leftTitles: getLeftTitles(interval),
         ),
-//        gridData: FlGridData(
-//          show: false
-//        )
       ),
       swapAnimationDuration: const Duration(milliseconds: 250),
     );
 }
+
+  BarChart getBarChart(){
+    //Create bar chart group data
+    List<BarChartGroupData> barGroups = new List();
+    int i = 0;
+    int previous = 0;
+    int maxCount = 0;
+    int minCount = 10000000000;
+    _countryStat.cases.forEach((caseCount) {
+      double yValue = caseCount.infected.toDouble();
+      switch(iconBoxTexts[_selectedButton]){
+        case "D": yValue = (caseCount.deceased - previous).toDouble();previous = caseCount.deceased;break;
+        case "R": yValue = (caseCount.recovered - previous).toDouble();previous = caseCount.recovered;break;
+        case "A": yValue = (caseCount.active - previous).toDouble();previous = caseCount.active;break;
+        default: yValue = (caseCount.infected - previous).toDouble();previous = caseCount.infected;
+      }
+      if(i!=0){
+        BarChartGroupData barGroup = new BarChartGroupData(
+          x: i,
+          barRods: [
+            BarChartRodData(
+              y: yValue,
+              color: getColorOfLine(),
+              width: 1
+//              width: screenWidth(context, dividedBy: (_numberOfDays*2).toDouble()),
+            )
+          ]
+        );
+        barGroups.add(barGroup);
+        maxCount = max(maxCount, yValue.floor());
+        minCount = max(minCount, yValue.floor());
+      }
+      i++;
+    });
+
+    int interval = ((maxCount - 0.0)/5).ceil();
+    if(interval == 0) interval++;
+
+    return BarChart(
+      BarChartData(
+        barGroups: barGroups,
+        gridData: FlGridData(
+          show: false,
+        ),
+        borderData: FlBorderData(
+          show: true,
+          border: Border(left: BorderSide(color: secondary_text), bottom: BorderSide(color: secondary_text))
+        ),
+        minY: 0.0,
+        maxY: maxCount.toDouble() + 5.0,
+        titlesData: FlTitlesData(
+          bottomTitles: getBottomTitles(),
+          leftTitles: getLeftTitles(interval),
+        ),
+      ),
+      swapAnimationDuration: const Duration(milliseconds: 250),
+      );
+  }
+
+  SideTitles getBottomTitles(){
+    return SideTitles(
+      showTitles: true,
+      textStyle: TextStyle(fontSize: 10, color: primary_text, fontWeight: FontWeight.bold),
+      getTitles: (value) => getBottomTitle(value.toInt())
+    );
+  }
+
+  SideTitles getLeftTitles(int interval){
+    return SideTitles(
+      reservedSize: 30,
+      interval: interval.toDouble(),
+      showTitles: true,
+      textStyle: TextStyle(fontSize: 8, color: primary_text, fontWeight: FontWeight.normal),
+      getTitles: (value) => getSideTitle(value.toInt())
+    );
+  }
 
   Color getColorOfLine(){
     Color lineColor = infected_text;
@@ -298,7 +364,7 @@ class _GraphState extends State<Graph> {
     return '';
   }
 
-  String getSideTitle(int value, int minCount, int maxCount){
+  String getSideTitle(int value){
     if(value>=1000){
       double d = value.toDouble()/1000.0;
       return d.toStringAsFixed(2) + "k";

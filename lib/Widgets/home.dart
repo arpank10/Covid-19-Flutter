@@ -1,7 +1,6 @@
 import 'package:covid/Database/country.dart';
 import 'package:covid/Database/database_client.dart';
 import 'package:covid/Widgets/bottom_nav.dart';
-import 'package:covid/Widgets/box.dart';
 import 'package:covid/Widgets/country_stat.dart';
 import 'package:covid/Widgets/custom_icons.dart';
 import 'package:covid/Widgets/graph.dart';
@@ -39,7 +38,7 @@ class _HomeState extends State<Home> {
 
   void populateDatabase(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isFirstTime = await prefs.getBool('firstTime') ?? true;
+    bool isFirstTime = prefs.getBool('firstTime') ?? true;
     if(isFirstTime){
       prefs.setBool('firstTime', false);
       await db.populateCountries(context);
