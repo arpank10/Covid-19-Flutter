@@ -82,6 +82,9 @@ class _HomeState extends State<Home> {
                           setState(() {
                             country = null;
                           });
+                          print("Height");
+                          print(screenHeight(context));
+                          print(screenWidth(context));
                           loadStats();
                         },
                       )
@@ -112,19 +115,23 @@ class _HomeState extends State<Home> {
                   margin: EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: propPaddingSmall)),
                   height: screenHeight(context, dividedBy: propBottomElement),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0,5.0),
+                        padding: EdgeInsets.symmetric(horizontal: screenHeight(context, dividedBy: propPaddingLarge)),
                         child: Text(
                           quote,
                           style: TextStyle(fontStyle: FontStyle.italic, color: secondary_text),
+                          textScaleFactor: 1.0,
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                        padding: EdgeInsets.symmetric(horizontal: screenHeight(context, dividedBy: propPaddingLarge),
+                        vertical: screenHeight(context, dividedBy: propPaddingSmall)),
                         child: Text(
                           stay,
                           style: TextStyle(color: primary_text, fontWeight: FontWeight.bold),
+                          textScaleFactor: 1.0,
                         ),
                       ),
                     ],

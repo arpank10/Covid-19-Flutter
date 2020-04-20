@@ -5,9 +5,11 @@ Size screenSize(BuildContext context) {
 }
 
 double screenHeight(BuildContext context, {double dividedBy = 1}) {
-  return screenSize(context).height / dividedBy;
+  int h = screenSize(context).height~/dividedBy;
+  return h.toDouble();
 }
 
 double screenWidth(BuildContext context, {double dividedBy = 1}) {
-  return screenSize(context).width / dividedBy;
+  int w = screenSize(context).width~/dividedBy;
+  return w.toDouble();
 }
