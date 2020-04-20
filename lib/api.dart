@@ -65,7 +65,6 @@ Future<CaseStat> fetchDataByCountry(Country country, int numberOfDays) async {
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
-    print(response.body);
     CaseStat caseStat = new CaseStat(country.country, country.iso2);
     var infectedObject = jsonDecode(response.body)['timeline']['cases'] as Map;
     var recoveredObject = jsonDecode(response.body)['timeline']['recovered'] as Map;
@@ -102,7 +101,6 @@ Future<CaseStat> fetchGlobalData(int numberOfDays) async {
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
-    print(response.body);
     CaseStat caseStat = new CaseStat("Global", "WL");
     var infectedObject = jsonDecode(response.body)['cases'] as Map;
     var recoveredObject = jsonDecode(response.body)['recovered'] as Map;

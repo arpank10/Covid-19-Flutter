@@ -4,14 +4,14 @@ import 'package:covid/constants.dart';
 
 class TextBox extends StatefulWidget {
   TextBox({Key key,
-    @required this.text,
+    @required this.index,
     @required this.onBoxSelected,
     @required this.active
   }) : super(key: key);
 
-  final String text;
+  final int index;
   final bool active;
-  final Function (String) onBoxSelected;
+  final Function (int) onBoxSelected;
 
   @override
   _TextBoxState createState() => _TextBoxState();
@@ -24,7 +24,7 @@ class _TextBoxState extends State<TextBox> {
   Widget build(BuildContext context) {
 
     return GestureDetector(
-      onTap: () => widget.onBoxSelected(widget.text),
+      onTap: () => widget.onBoxSelected(widget.index),
       child: Container(
         margin: EdgeInsets.all(10.0),
         height: screenHeight(context, dividedBy: propTextBox),
@@ -36,7 +36,7 @@ class _TextBoxState extends State<TextBox> {
         ),
         child: Center(
           child: Text(
-            widget.text,
+            iconBoxTexts[widget.index],
             style: TextStyle(color: getColorOfLine()),
           ),
         ),
@@ -46,7 +46,7 @@ class _TextBoxState extends State<TextBox> {
 
   Color getColorOfLine(){
     Color lineColor = infected_text;
-    switch(widget.text){
+    switch(iconBoxTexts[widget.index]){
       case "D": lineColor = secondary_text;break;
       case "R": lineColor = recovered_text;break;
       case "A": lineColor = active_text;break;

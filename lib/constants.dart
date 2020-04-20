@@ -79,6 +79,7 @@ const propPaddingSmall = 160.0;
 
 //text box
 const propTextBox = 25.0;
+const propTimingBox = 30.0;
 
 
 //----------------------------------Shadows---------------------------------//
@@ -162,3 +163,7 @@ const inner_icon_shadow = const [
     color: topShadow
   )
 ];
+
+//----------------------------------Arrays---------------------------------//
+const timingBoxTexts = ["Beginning", "1 Month", "2 Weeks"];
+const iconBoxTexts = ["I", "D", "R", "A"];

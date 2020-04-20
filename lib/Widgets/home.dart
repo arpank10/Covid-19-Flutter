@@ -2,6 +2,7 @@ import 'package:covid/Database/country.dart';
 import 'package:covid/Database/database_client.dart';
 import 'package:covid/Widgets/bottom_nav.dart';
 import 'package:covid/Widgets/box.dart';
+import 'package:covid/Widgets/country_stat.dart';
 import 'package:covid/Widgets/custom_icons.dart';
 import 'package:covid/Widgets/graph.dart';
 import 'package:covid/Widgets/search.dart';
@@ -31,9 +32,18 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    fetchAllStats().then((value) => this.loadStats());
+    fetchAllStats();
     populateDatabase(context);
-    loadStats();
+
+  }
+
+  void populateDatabase(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isFirstTime = await prefs.getBool('firstTime') ?? true;
+    if(isFirstTime){
+      prefs.setBool('firstTime', false);
+      await db.populateCountries(context);
+    }
   }
 
   @override
@@ -55,9 +65,8 @@ class _HomeState extends State<Home> {
                   margin: EdgeInsets.only(top: screenHeight(context, dividedBy: propPaddingLarge)),
                   child: SearchBar(
                     onCountrySelected: (Country value){
-                      print(value.country);
+//                      print(value.country);
                       setState(() => country = value);
-                      loadStats();
                     },
                   ),
                 ),
@@ -82,10 +91,6 @@ class _HomeState extends State<Home> {
                           setState(() {
                             country = null;
                           });
-                          print("Height");
-                          print(screenHeight(context));
-                          print(screenWidth(context));
-                          loadStats();
                         },
                       )
                     ],
@@ -99,7 +104,7 @@ class _HomeState extends State<Home> {
                   visible: _currentSelected == CustomIcon.home,
                   child: Container(
                     child: Center(
-                      child: getCountryBoxes(),
+                      child: StatBox(country: country),
                     ),
                   ),
                 ),
@@ -158,111 +163,5 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget getCountryBoxes(){
-    return FutureBuilder<Country>(
-      future: futureCountry,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return  Column(children: <Widget>[
-            Row(
-              children: <Widget>[
-                DetailBox(
-                  category: "Infected",
-                  increasedCount: snapshot.data.newConfirmed.toString(),
-                  totalCount: snapshot.data.totalConfirmed.toString(),
-                  icon: CustomIcon.corona,
-                  alignment: TextAlign.left,
-                ),
-                DetailBox(
-                  category: "Deceased",
-                  increasedCount: snapshot.data.newDeaths.toString(),
-                  totalCount: snapshot.data.totalDeaths.toString(),
-                  icon: CustomIcon.dead,
-                  alignment: TextAlign.right,
-                )
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                DetailBox(
-                  category: "Recovered",
-                  increasedCount: snapshot.data.newRecovered.toString(),
-                  totalCount: snapshot.data.totalRecovered.toString(),
-                  icon: CustomIcon.recovered,
-                  alignment: TextAlign.left
-                ),
-                DetailBox(
-                  category: "Active",
-                  increasedCount: (snapshot.data.newConfirmed - snapshot.data.newRecovered - snapshot.data.newDeaths).toString(),
-                  totalCount: (snapshot.data.totalConfirmed - snapshot.data.totalRecovered - snapshot.data.totalDeaths).toString(),
-                  icon: CustomIcon.active,
-                  alignment: TextAlign.right,
-                )
-              ],
-            ),
-          ]);
-        } else {
-          return  Column(children: <Widget>[
-            Row(
-              children: <Widget>[
-                DetailBox(
-                  category: "Infected",
-                  increasedCount: "0",
-                  totalCount: "0",
-                  icon: CustomIcon.corona,
-                  alignment: TextAlign.left,
-                ),
-                DetailBox(
-                  category: "Deceased",
-                  increasedCount: "0",
-                  totalCount: "0",
-                  icon: CustomIcon.dead,
-                  alignment: TextAlign.right,
-                )
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                DetailBox(
-                  category: "Recovered",
-                  increasedCount: "0",
-                  totalCount: "0",
-                  icon: CustomIcon.recovered,
-                  alignment: TextAlign.left
-                ),
-                DetailBox(
-                  category: "Active",
-                  increasedCount: "0",
-                  totalCount: "0",
-                  icon: CustomIcon.active,
-                  alignment: TextAlign.right,
-                )
-              ],
-            ),
-          ]);
-        }
-        return CircularProgressIndicator();
-      });
-  }
 
-
-  void populateDatabase(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isFirstTime = await prefs.getBool('firstTime') ?? true;
-    if(isFirstTime){
-      prefs.setBool('firstTime', false);
-      await db.populateCountries(context);
-    }
-  }
-
-  void loadStats(){
-    if(country == null)
-      setState(() {
-        futureCountry = db.fetchCountry("global");
-      });
-    else
-      setState(() {
-        futureCountry = db.fetchCountry(country.slug);
-      });
-  }
 }

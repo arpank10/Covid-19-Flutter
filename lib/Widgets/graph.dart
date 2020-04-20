@@ -21,34 +21,45 @@ class Graph extends StatefulWidget {
 class _GraphState extends State<Graph> {
   DateTime startDate = DateTime(2020);
   DateTime endDate = DateTime.now();
-  String _selectedButton = "I";
+  int _selectedButton = 0;
+  int _selectedLabel = 1;
   Future<CaseStat> _caseStat;
   CaseStat _countryStat;
   int _numberOfDays = 30;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadData();
   }
 
+  @override
+  void didUpdateWidget(Graph oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    if(oldWidget.country != widget.country){
+      setState(() {
+        _countryStat = null;
+      });
+      loadData();
+    }
+  }
+
   void loadData() {
     _caseStat = fetchDataByCountry(widget.country, _numberOfDays);
-    _caseStat.then((value) => _countryStat = value);
+    _caseStat.then((value) { _countryStat = value; print("Data loaded");});
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       height: screenHeight(context, dividedBy: propStatBox) + 4*screenHeight(context, dividedBy: propPaddingLarge),
       child: Center(
         child: Column(
           children: <Widget>[
-            getTimingRow(),
             getTextButtons(),
             getGraph(),
+            getTimingRow(),
           ],
         ),
       )
@@ -59,38 +70,51 @@ class _GraphState extends State<Graph> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        getTimingBox("Beginning"),
-        getTimingBox("1 Month"),
-        getTimingBox("2 Weeks"),
+        getTimingBox(0),
+        getTimingBox(1),
+        getTimingBox(2),
       ],
     );
   }
 
-  Widget getTimingBox(String label){
+  Widget getTimingBox(int index){
     int days = 0;
-    switch(label){
-      case "2 Weeks": days = 14;break;
-      case "2 Weeks": days = 14;break;
+    switch(index){
+      case 0: days = 14;break;
+      case 1: days = 30;break;
+      case 2: days = 14;break;
       default: days = 30;break;
     }
     return GestureDetector(
-      onTap: () => setState(() {
+      onTap: () {
+        setState(() {
         _numberOfDays = days;
-      }),
+        _selectedLabel = index;
+        _countryStat = null;
+        });
+        loadData();
+      },
       child: Container(
-        height : screenHeight(context, dividedBy: propTextBox),
-        margin : EdgeInsets.all(screenHeight(context, dividedBy: propPaddingLarge)),
+        height : screenHeight(context, dividedBy: propTimingBox),
+        padding : EdgeInsets.symmetric(horizontal: screenHeight(context, dividedBy: propPaddingSmall)),
+        margin : EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: propPaddingSmall)),
         decoration: BoxDecoration(
-          gradient: box_background,
-          boxShadow: inner_shadow,
+//          gradient: box_background,
+          color: _selectedLabel == index?background:getColorOfLine(),
+          boxShadow: _selectedLabel == index?inner_icon_shadow:outer_icon_shadow,
+//          border: Border.all(color: faded_orange.withOpacity(1)),
           borderRadius: BorderRadius.circular(4.0)
         ),
-        child: Center(child: Text(label, textScaleFactor: 1.0)),
+        child: Center(
+          child: Text(
+            timingBoxTexts[index],
+            style: TextStyle(color: primary_text),
+            textScaleFactor: 1.0)),
       ),
     );
   }
 
-  void onBoxSelected(String selected){
+  void onBoxSelected(int selected){
     setState(() {
       _selectedButton = selected;
     });
@@ -103,21 +127,21 @@ class _GraphState extends State<Graph> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           TextBox(
-            text: "I",
+            index: 0,
             onBoxSelected: this.onBoxSelected,
-            active: _selectedButton == "I"),
+            active: _selectedButton == 0),
           TextBox(
-            text: "D",
+            index: 1,
             onBoxSelected: this.onBoxSelected,
-            active: _selectedButton == "D"),
+            active: _selectedButton == 1),
           TextBox(
-            text: "R",
+            index: 2,
             onBoxSelected: this.onBoxSelected,
-            active: _selectedButton == "R"),
+            active: _selectedButton == 2),
           TextBox(
-            text: "A",
+            index: 3,
             onBoxSelected: this.onBoxSelected,
-            active: _selectedButton == "A"),
+            active: _selectedButton == 3),
         ],
       ),
     );
@@ -137,7 +161,9 @@ class _GraphState extends State<Graph> {
         child: FutureBuilder<CaseStat>(
           future: _caseStat,
           builder: (context, snapshot) {
-            if(snapshot.hasData){
+            if(_caseStat == null) print("NULL");
+            else print("NOT NULL");
+            if(snapshot.hasData && _countryStat!=null){
               return getLineChart();
             }
             return Center(
@@ -154,7 +180,7 @@ class _GraphState extends State<Graph> {
     int i = 1;
     _countryStat.cases.forEach((caseCount) {
       double yValue = caseCount.infected.toDouble();
-      switch(_selectedButton){
+      switch(iconBoxTexts[_selectedButton]){
         case "D": yValue = caseCount.deceased.toDouble();break;
         case "R": yValue = caseCount.recovered.toDouble();break;
         case "A": yValue = caseCount.active.toDouble();break;
@@ -172,11 +198,11 @@ class _GraphState extends State<Graph> {
     return LineChart(
       LineChartData(
         gridData: FlGridData(
-          show: true,
+          show: false,
           drawVerticalLine: true,
           drawHorizontalLine: true,
-          horizontalInterval: (interval/3).toDouble(),
-          verticalInterval: 2.0,
+          horizontalInterval: (interval/2).toDouble(),
+          verticalInterval: _numberOfDays/10,
           getDrawingHorizontalLine: (value) {
             return FlLine(
               color: secondary_text.withOpacity(0.1),
@@ -222,6 +248,10 @@ class _GraphState extends State<Graph> {
             dotData: FlDotData(
               show: false,
             ),
+            belowBarData: BarAreaData(
+              show: true,
+              colors: [getColorOfLine().withOpacity(0.2)],
+            ),
           ),
         ],
         minY: minCount.toDouble(),
@@ -250,7 +280,7 @@ class _GraphState extends State<Graph> {
 
   Color getColorOfLine(){
     Color lineColor = infected_text;
-    switch(_selectedButton){
+    switch(iconBoxTexts[_selectedButton]){
       case "D": lineColor = secondary_text;break;
       case "R": lineColor = recovered_text;break;
       case "A": lineColor = active_text;break;
@@ -272,8 +302,8 @@ class _GraphState extends State<Graph> {
     if(value>=1000){
       double d = value.toDouble()/1000.0;
       return d.toStringAsFixed(2) + "k";
-    }
-    return '';
+    } else return value.toString();
+//    return '';
   }
 
 }
