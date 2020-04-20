@@ -3,6 +3,7 @@ import 'package:covid/Database/database_client.dart';
 import 'package:covid/Widgets/bottom_nav.dart';
 import 'package:covid/Widgets/box.dart';
 import 'package:covid/Widgets/custom_icons.dart';
+import 'package:covid/Widgets/graph.dart';
 import 'package:covid/Widgets/search.dart';
 import 'package:covid/api.dart';
 import 'package:covid/screensize_reducer.dart';
@@ -41,6 +42,7 @@ class _HomeState extends State<Home> {
       child: Container(
         decoration: BoxDecoration(
           gradient: backgroud_gradient,
+//          color: background
         ),
         child: Scaffold(
           resizeToAvoidBottomPadding: false,
@@ -85,6 +87,10 @@ class _HomeState extends State<Home> {
                       )
                     ],
                   ),
+                ),
+                Visibility(
+                  visible: _currentSelected == CustomIcon.stats,
+                  child: Graph(country: country),
                 ),
                 Visibility(
                   visible: _currentSelected == CustomIcon.home,
@@ -231,6 +237,7 @@ class _HomeState extends State<Home> {
         return CircularProgressIndicator();
       });
   }
+
 
   void populateDatabase(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

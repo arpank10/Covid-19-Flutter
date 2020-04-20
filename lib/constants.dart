@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 //-----------------------------------Colors----------------------------------//
 const primary = const Color(0xff121212);
+const background =  Color.fromRGBO(19,21,23,1.0);
 const search_bar_colour = const Color.fromRGBO(34,36,45,1.0);
 const box_gradient_top = const Color(0xff1B1E27);
 const box_gradient_bottom = const Color(0xff121212);
@@ -19,9 +20,12 @@ const bottomShadow = const Color.fromRGBO(0, 0, 0, 0.75);
 
 //----------------------------------Gradients---------------------------------//
 const backgroud_gradient = const LinearGradient(
-  begin: const FractionalOffset(0.0, 0.0),
-  end: const FractionalOffset(0.0, 0.6875),
-  colors: [Color.fromRGBO(34,36,45,1.0), Color.fromRGBO(19,21,23,1.0)],
+//  begin: const FractionalOffset(0.0, 0.0),
+//  end: const FractionalOffset(0.0, 0.6875),
+  begin: Alignment.topLeft,
+  end: Alignment.bottomRight,
+  colors: [Color.fromRGBO(34,36,45,1.0), Color.fromRGBO(19,21,23,0.5)],
+//  colors: [orange, Color.fromRGBO(19,21,23,1.0)],
   stops: [0.0, 1.0],
   tileMode: TileMode.clamp
 );
@@ -45,6 +49,12 @@ const blurOffsetInner = 2.0;
 const top_padding = 20.0;
 const blurSpreadInner = 1.0;
 
+const outerIconBlur = 1.0;
+const innerIconBlur = 1.0;
+const outerBlurIconOffset = 1.0;
+const innerBlurIconOffset = 1.0;
+const innerBlurIconSpread = 1.0;
+
 
 //----------------------------------proportions---------------------------------//
 //top
@@ -67,6 +77,9 @@ const propBottomIcon = 20.0;
 const propPaddingLarge = 80.0;
 const propPaddingSmall = 160.0;
 
+//text box
+const propTextBox = 25.0;
+
 
 //----------------------------------Shadows---------------------------------//
 const outer_shadow = const [
@@ -78,6 +91,7 @@ const outer_shadow = const [
     ),
     color: topShadow,
   ),
+
   BoxShadow(
     blurRadius: outerBlurLevel,
     offset: Offset(
@@ -85,7 +99,8 @@ const outer_shadow = const [
       blurOffsetOuter,
     ),
     color: bottomShadow
-  )];
+  )
+];
 
 const inner_shadow = const [
   BoxShadow(
@@ -105,4 +120,45 @@ const inner_shadow = const [
     ),
     spreadRadius: blurSpreadInner,
     color: topShadow
-  )];
+  )
+];
+const outer_icon_shadow = const [
+  BoxShadow(
+    blurRadius: outerIconBlur,
+    offset: Offset(
+      -outerBlurIconOffset,
+      -outerBlurIconOffset,
+    ),
+    color: topShadow,
+  ),
+
+  BoxShadow(
+    blurRadius: outerIconBlur,
+    offset: Offset(
+      outerBlurIconOffset,
+      outerBlurIconOffset,
+    ),
+    color: bottomShadow
+  )
+];
+
+const inner_icon_shadow = const [
+  BoxShadow(
+    blurRadius: innerIconBlur,
+    offset: Offset(
+      -innerBlurIconOffset,
+      -innerBlurIconOffset
+    ),
+    spreadRadius: innerBlurIconSpread,
+    color: bottomShadow,
+  ),
+  BoxShadow(
+    blurRadius: innerIconBlur,
+    offset: Offset(
+      innerBlurIconOffset,
+      innerBlurIconOffset
+    ),
+    spreadRadius: innerBlurIconSpread,
+    color: topShadow
+  )
+];
