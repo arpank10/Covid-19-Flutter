@@ -2,14 +2,16 @@ import 'dart:math';
 
 import 'package:covid/Database/cases.dart';
 import 'package:covid/Database/country.dart';
+import 'package:covid/Helpers/api.dart';
 import 'package:covid/Widgets/custom_icons.dart';
 import 'package:covid/Widgets/text_box.dart';
-import 'package:covid/api.dart';
 import 'package:covid/screensize_reducer.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:covid/constants.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 class GraphBox extends StatefulWidget {
   GraphBox({Key key,
@@ -25,6 +27,7 @@ class GraphBox extends StatefulWidget {
 class _GraphBoxState extends State<GraphBox> {
   DateTime startDate = DateTime(2020);
   DateTime endDate = DateTime.now();
+  API api = new API();
   int _selectedButton = 0;
   int _selectedLabel = 1;
   int _selectedChart = 0;
@@ -52,8 +55,10 @@ class _GraphBoxState extends State<GraphBox> {
   }
 
   void loadData() {
-    _caseStat = fetchDataByCountry(widget.country, _numberOfDays);
-    _caseStat.then((value) { _countryStat = value; print("Data loaded");});
+    _caseStat = api.fetchDataByCountry(widget.country, _numberOfDays);
+    _caseStat.then((value) { setState(() {
+      _countryStat = value;
+    }); print("Data loaded");});
   }
 
   @override
@@ -190,8 +195,36 @@ class _GraphBoxState extends State<GraphBox> {
         child: FutureBuilder<CaseStat>(
           future: _caseStat,
           builder: (context, snapshot) {
-            if(snapshot.hasData && _countryStat!=null){
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            else if(snapshot.hasData && _countryStat!=null){
               return _selectedChart == 0?getLineChart():getBarChart();
+            }
+            else if(snapshot.hasError){
+              final error = snapshot.error;
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Please check your internet connection and retry"),
+                    IconButton(
+                      icon: Icon(Icons.refresh),
+                      iconSize: screenHeight(context, dividedBy: propTextBox),
+                      onPressed: () {
+                        HapticFeedback.lightImpact();
+                        setState(() {
+                          _countryStat = null;
+                        });
+                        loadData();
+                      },
+                      color: faded_orange,
+                    ),
+                  ],
+                )
+              );
             }
             return Center(
               child: CircularProgressIndicator(),

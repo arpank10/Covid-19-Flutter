@@ -1,11 +1,11 @@
 import 'package:covid/Database/country.dart';
 import 'package:covid/Database/database_client.dart';
+import 'package:covid/Helpers/api.dart';
 import 'package:covid/Widgets/bottom_nav.dart';
 import 'package:covid/Widgets/country_stat.dart';
 import 'package:covid/Widgets/custom_icons.dart';
 import 'package:covid/Widgets/graph.dart';
 import 'package:covid/Widgets/search.dart';
-import 'package:covid/api.dart';
 import 'package:covid/screensize_reducer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,11 +27,12 @@ class _HomeState extends State<Home> {
   Country country;
   Future<Country> futureCountry;
   final DatabaseClient db = DatabaseClient.instance;
+  final API api = new API();
 
   @override
   void initState() {
     super.initState();
-    fetchAllStats();
+    api.fetchAllStats();
     populateDatabase(context);
 
   }

@@ -167,3 +167,12 @@ const inner_icon_shadow = const [
 const timingBoxTexts = ["Beginning", "1 Month", "2 Weeks"];
 const iconBoxTexts = ["I", "D", "R", "A"];
 const selectedChartHeading = ["Cumulative", "Daily"];
+
+//----------------------------------Api---------------------------------//
+const BASE_URL = "https://api.covid19api.com/";
+const BASE2_URL = "https://corona.lmao.ninja/";
+
+//ALL COUNTRY DATA
+const summary = "summary";
+const globalData = "v2/historical/all?lastdays=";
+const countryWise = "v2/historical/";
