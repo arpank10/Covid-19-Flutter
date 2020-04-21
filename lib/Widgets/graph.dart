@@ -11,18 +11,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:covid/constants.dart';
 
-class Graph extends StatefulWidget {
-  Graph({Key key,
+class GraphBox extends StatefulWidget {
+  GraphBox({Key key,
     @required this.country,
   }) : super(key: key);
 
   final Country country;
 
   @override
-  _GraphState createState() => _GraphState();
+  _GraphBoxState createState() => _GraphBoxState();
 }
 
-class _GraphState extends State<Graph> {
+class _GraphBoxState extends State<GraphBox> {
   DateTime startDate = DateTime(2020);
   DateTime endDate = DateTime.now();
   int _selectedButton = 0;
@@ -31,6 +31,7 @@ class _GraphState extends State<Graph> {
   Future<CaseStat> _caseStat;
   CaseStat _countryStat;
   int _numberOfDays = 30;
+  int touchedIndex = -1;
 
   @override
   void initState() {
@@ -39,7 +40,7 @@ class _GraphState extends State<Graph> {
   }
 
   @override
-  void didUpdateWidget(Graph oldWidget) {
+  void didUpdateWidget(GraphBox oldWidget) {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
     if(oldWidget.country != widget.country){
@@ -189,8 +190,6 @@ class _GraphState extends State<Graph> {
         child: FutureBuilder<CaseStat>(
           future: _caseStat,
           builder: (context, snapshot) {
-            if(_caseStat == null) print("NULL");
-            else print("NOT NULL");
             if(snapshot.hasData && _countryStat!=null){
               return _selectedChart == 0?getLineChart():getBarChart();
             }
@@ -225,6 +224,7 @@ class _GraphState extends State<Graph> {
 
     return LineChart(
       LineChartData(
+        axisTitleData: getAxisTitle(),
         gridData: FlGridData(
           show: false,
           drawVerticalLine: true,
@@ -313,10 +313,9 @@ class _GraphState extends State<Graph> {
           x: i,
           barRods: [
             BarChartRodData(
-              y: yValue,
-              color: getColorOfLine(),
-              width: 1
-//              width: screenWidth(context, dividedBy: (_numberOfDays*2).toDouble()),
+              y: touchedIndex == i?yValue + 1:yValue,
+              color: touchedIndex == i?orange:getColorOfLine(),
+              width: screenWidth(context, dividedBy: (_numberOfDays*2).toDouble()),
             )
           ]
         );
@@ -332,6 +331,29 @@ class _GraphState extends State<Graph> {
 
     return BarChart(
       BarChartData(
+        barTouchData: BarTouchData(
+          enabled: true,
+          touchTooltipData: BarTouchTooltipData(
+            tooltipBgColor: getColorOfLine(),
+            getTooltipItem: (group, groupIndex, rod, rodIndex){
+              return BarTooltipItem(
+                '${_countryStat.cases[group.x.toInt()].date} \n${rod.y.toInt()} cases',
+                const TextStyle(color: Colors.white),
+              );
+            }),
+          touchCallback: (barTouchResponse) {
+            setState(() {
+              if (barTouchResponse != null && barTouchResponse.spot != null &&
+                barTouchResponse.touchInput is! FlPanEnd &&
+                barTouchResponse.touchInput is! FlLongPressEnd) {
+                touchedIndex = barTouchResponse.spot.touchedBarGroupIndex;
+              } else {
+                touchedIndex = -1;
+              }
+            });
+          }
+        ),
+        axisTitleData: getAxisTitle(),
         barGroups: barGroups,
         gridData: FlGridData(
           show: false,
@@ -349,6 +371,19 @@ class _GraphState extends State<Graph> {
       ),
       swapAnimationDuration: const Duration(milliseconds: 250),
       );
+  }
+
+  FlAxisTitleData getAxisTitle(){
+    return FlAxisTitleData(
+      show: false,
+      topTitle: AxisTitle(
+        showTitle: true,
+        titleText: selectedChartHeading[_selectedChart],
+        textAlign: TextAlign.center,
+        reservedSize: 10,
+        textStyle: TextStyle(fontSize: 12, color: getColorOfLine(), fontWeight: FontWeight.bold),
+      )
+    );
   }
 
   SideTitles getBottomTitles(){

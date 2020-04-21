@@ -166,3 +166,4 @@ const inner_icon_shadow = const [
 //----------------------------------Arrays---------------------------------//
 const timingBoxTexts = ["Beginning", "1 Month", "2 Weeks"];
 const iconBoxTexts = ["I", "D", "R", "A"];
+const selectedChartHeading = ["Cumulative", "Daily"];

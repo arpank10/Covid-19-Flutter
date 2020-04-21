@@ -97,7 +97,7 @@ class _HomeState extends State<Home> {
                 ),
                 Visibility(
                   visible: _currentSelected == CustomIcon.stats,
-                  child: Graph(country: country),
+                  child: GraphBox(country: country),
                 ),
                 Visibility(
                   visible: _currentSelected == CustomIcon.home,
