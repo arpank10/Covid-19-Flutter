@@ -2,10 +2,12 @@ import 'dart:math';
 
 import 'package:covid/Database/cases.dart';
 import 'package:covid/Database/country.dart';
+import 'package:covid/Widgets/custom_icons.dart';
 import 'package:covid/Widgets/text_box.dart';
 import 'package:covid/api.dart';
 import 'package:covid/screensize_reducer.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:covid/constants.dart';
 
@@ -25,6 +27,7 @@ class _GraphState extends State<Graph> {
   DateTime endDate = DateTime.now();
   int _selectedButton = 0;
   int _selectedLabel = 1;
+  int _selectedChart = 0;
   Future<CaseStat> _caseStat;
   CaseStat _countryStat;
   int _numberOfDays = 30;
@@ -101,10 +104,8 @@ class _GraphState extends State<Graph> {
         padding : EdgeInsets.symmetric(horizontal: screenHeight(context, dividedBy: propPaddingSmall)),
         margin : EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: propPaddingSmall)),
         decoration: BoxDecoration(
-//          gradient: box_background,
           color: _selectedLabel == index?background:getColorOfLine(),
           boxShadow: _selectedLabel == index?inner_icon_shadow:outer_icon_shadow,
-//          border: Border.all(color: faded_orange.withOpacity(1)),
           borderRadius: BorderRadius.circular(4.0)
         ),
         child: Center(
@@ -124,7 +125,7 @@ class _GraphState extends State<Graph> {
 
   Widget getTextButtons() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: screenWidth(context, dividedBy: 5)),
+      padding: EdgeInsets.symmetric(horizontal: screenWidth(context, dividedBy: propPaddingLarge/10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
@@ -136,6 +137,31 @@ class _GraphState extends State<Graph> {
             index: 1,
             onBoxSelected: this.onBoxSelected,
             active: _selectedButton == 1),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _selectedChart = 1 - _selectedChart;
+              });
+            },
+            child: Container(
+              margin: EdgeInsets.all(10.0),
+              height: screenHeight(context, dividedBy: propTextBox),
+              width: screenHeight(context, dividedBy: propTextBox),
+              decoration: BoxDecoration(
+                gradient: box_background,
+                color: primary,
+                border: Border.all(color: getColorOfLine()),
+                borderRadius: BorderRadius.circular(2),
+              ),
+              child: Center(
+                child: Icon(
+                  _selectedChart == 0?CustomIcon.bar_chart:CustomIcon.line_chart,
+                  size: screenHeight(context, dividedBy: propTextBox*2.0),
+                  color: getColorOfLine().withOpacity(0.8),
+                ),
+              ),
+            ),
+          ),
           TextBox(
             index: 2,
             onBoxSelected: this.onBoxSelected,
@@ -166,8 +192,7 @@ class _GraphState extends State<Graph> {
             if(_caseStat == null) print("NULL");
             else print("NOT NULL");
             if(snapshot.hasData && _countryStat!=null){
-//              return getLineChart();
-              return getBarChart();
+              return _selectedChart == 0?getLineChart():getBarChart();
             }
             return Center(
               child: CircularProgressIndicator(),

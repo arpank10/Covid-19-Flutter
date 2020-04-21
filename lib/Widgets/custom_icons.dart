@@ -28,5 +28,7 @@ class CustomIcon {
   static const IconData recovered = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData dead = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData active = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData line_chart = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData bar_chart = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData global = IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

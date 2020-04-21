@@ -26,7 +26,7 @@ class _TextBoxState extends State<TextBox> {
     return GestureDetector(
       onTap: () => widget.onBoxSelected(widget.index),
       child: Container(
-        margin: EdgeInsets.all(10.0),
+        margin: EdgeInsets.all(screenHeight(context, dividedBy: propPaddingLarge)),
         height: screenHeight(context, dividedBy: propTextBox),
         width: screenHeight(context, dividedBy: propTextBox),
         decoration: BoxDecoration(
