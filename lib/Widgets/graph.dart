@@ -25,8 +25,7 @@ class GraphBox extends StatefulWidget {
 }
 
 class _GraphBoxState extends State<GraphBox> {
-  DateTime startDate = DateTime(2020);
-  DateTime endDate = DateTime.now();
+
   API api = new API();
   int _selectedButton = 0;
   int _selectedLabel = 1;
@@ -91,10 +90,10 @@ class _GraphBoxState extends State<GraphBox> {
   Widget getTimingBox(int index){
     int days = 0;
     switch(index){
-      case 0: days = 14;break;
-      case 1: days = 30;break;
-      case 2: days = 14;break;
-      default: days = 30;break;
+      case 0: days = getDaysFromBeginning();break;
+      case 1: days = 31;break;
+      case 2: days = 15;break;
+      default: days = 31;break;
     }
     return GestureDetector(
       onTap: () {
@@ -263,7 +262,7 @@ class _GraphBoxState extends State<GraphBox> {
           drawVerticalLine: true,
           drawHorizontalLine: true,
           horizontalInterval: (interval/2).toDouble(),
-          verticalInterval: _numberOfDays/10,
+          verticalInterval: _countryStat.cases.length/10,
           getDrawingHorizontalLine: (value) {
             return FlLine(
               color: secondary_text.withOpacity(0.1),
@@ -449,8 +448,8 @@ class _GraphBoxState extends State<GraphBox> {
   }
 
   String getBottomTitle(int value){
-    int slab = (_numberOfDays/5).floor();
-    if(value>=_numberOfDays) return '';
+    int slab = (_countryStat.cases.length/5).floor();
+    if(value>=_countryStat.cases.length) return '';
     if(value%slab == 0){
       return _countryStat.cases[value].date;
     }
@@ -465,4 +464,10 @@ class _GraphBoxState extends State<GraphBox> {
 //    return '';
   }
 
+  int getDaysFromBeginning(){
+    DateTime current = DateTime.now();
+    DateTime beginning = DateTime(2020, DateTime.january, 22);
+    int days = current.difference(beginning).inDays;
+    return days+1;
+  }
 }
