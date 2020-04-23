@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 //-----------------------------------Colors----------------------------------//
 const primary = const Color(0xff121212);
 const background =  Color.fromRGBO(19,21,23,1.0);
+const background2 =  Color.fromRGBO(20,20,20,1.0);
 const search_bar_colour = const Color.fromRGBO(34,36,45,1.0);
 const box_gradient_top = const Color(0xff1B1E27);
 const box_gradient_bottom = const Color(0xff121212);
@@ -16,6 +17,11 @@ const active_text = Color.fromRGBO(45, 156, 219, 0.5);
 const faded_orange =  Color.fromRGBO(243, 124, 74, 0.75);
 const topShadow = const Color.fromRGBO(255, 250, 250, 0.2);
 const bottomShadow = const Color.fromRGBO(0, 0, 0, 0.75);
+
+const onboardA =  Color.fromRGBO(19,21,23,1.0);
+const onboardB =  Color.fromRGBO(19,21,23,1.0);
+const onboardC =  Color.fromRGBO(19,21,23,1.0);
+
 
 //----------------------------------Gradients---------------------------------//
 const backgroud_gradient = const LinearGradient(
@@ -79,7 +85,13 @@ const propPaddingSmall = 160.0;
 //text box
 const propTextBox = 25.0;
 const propTimingBox = 30.0;
+const propTopPadding = 20.0;
 
+//Flex values
+const flexTopQuote = 5;
+const flexImage = 7;
+const flexHeading = 6;
+const flexIndicators = 3;
 
 //----------------------------------Shadows---------------------------------//
 const outer_shadow = const [
@@ -91,7 +103,6 @@ const outer_shadow = const [
     ),
     color: topShadow,
   ),
-
   BoxShadow(
     blurRadius: outerBlurLevel,
     offset: Offset(
@@ -131,7 +142,6 @@ const outer_icon_shadow = const [
     ),
     color: topShadow,
   ),
-
   BoxShadow(
     blurRadius: outerIconBlur,
     offset: Offset(
@@ -167,6 +177,16 @@ const inner_icon_shadow = const [
 const timingBoxTexts = ["Beginning", "1 Month", "2 Weeks"];
 const iconBoxTexts = ["I", "D", "R", "A"];
 const selectedChartHeading = ["Cumulative", "Daily"];
+
+//----------------------------------Arrays---------------------------------//
+const onboard_qoutes = ["Ignorance isn't bliss always", "Curves only look good on bodies", "Save the world by staying at home"];
+const onboard_headings = ["Know the figures", "Flatten the curve", "It's time to start"];
+const onboard_description = [
+  "Real time updates from data curated by John Hopkins University. View the trends of the Covid-19 strain worldwide or in your own country.",
+  "",
+  ""
+];
+
 
 //----------------------------------Api---------------------------------//
 const BASE_URL = "https://api.covid19api.com/";

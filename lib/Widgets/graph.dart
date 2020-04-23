@@ -35,6 +35,13 @@ class _GraphBoxState extends State<GraphBox> {
   int _numberOfDays = 30;
   int touchedIndex = -1;
 
+  void loadData() {
+    _caseStat = api.fetchDataByCountry(widget.country, _numberOfDays);
+    _caseStat.then((value) { setState(() {
+      _countryStat = value;
+    }); print("Data loaded");});
+  }
+
   @override
   void initState() {
     super.initState();
@@ -53,13 +60,6 @@ class _GraphBoxState extends State<GraphBox> {
     }
   }
 
-  void loadData() {
-    _caseStat = api.fetchDataByCountry(widget.country, _numberOfDays);
-    _caseStat.then((value) { setState(() {
-      _countryStat = value;
-    }); print("Data loaded");});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -75,59 +75,7 @@ class _GraphBoxState extends State<GraphBox> {
       )
     );
   }
-
-  Widget getTimingRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-        getTimingBox(0),
-        getTimingBox(1),
-        getTimingBox(2),
-      ],
-    );
-  }
-
-  Widget getTimingBox(int index){
-    int days = 0;
-    switch(index){
-      case 0: days = getDaysFromBeginning();break;
-      case 1: days = 31;break;
-      case 2: days = 15;break;
-      default: days = 31;break;
-    }
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-        _numberOfDays = days;
-        _selectedLabel = index;
-        _countryStat = null;
-        });
-        loadData();
-      },
-      child: Container(
-        height : screenHeight(context, dividedBy: propTimingBox),
-        padding : EdgeInsets.symmetric(horizontal: screenHeight(context, dividedBy: propPaddingSmall)),
-        margin : EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: propPaddingSmall)),
-        decoration: BoxDecoration(
-          color: _selectedLabel == index?background:getColorOfLine(),
-          boxShadow: _selectedLabel == index?inner_icon_shadow:outer_icon_shadow,
-          borderRadius: BorderRadius.circular(4.0)
-        ),
-        child: Center(
-          child: Text(
-            timingBoxTexts[index],
-            style: TextStyle(color: primary_text),
-            textScaleFactor: 1.0)),
-      ),
-    );
-  }
-
-  void onBoxSelected(int selected){
-    setState(() {
-      _selectedButton = selected;
-    });
-  }
-
+//----------------------------------------Text Buttons------------------------------------------//
   Widget getTextButtons() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: screenWidth(context, dividedBy: propPaddingLarge/10)),
@@ -180,6 +128,13 @@ class _GraphBoxState extends State<GraphBox> {
     );
   }
 
+  void onBoxSelected(int selected){
+    setState(() {
+      _selectedButton = selected;
+    });
+  }
+
+//----------------------------------------Graph------------------------------------------//
   Widget getGraph() {
       return Container(
         margin: EdgeInsets.all(screenHeight(context, dividedBy: propPaddingLarge)),
@@ -436,17 +391,6 @@ class _GraphBoxState extends State<GraphBox> {
     );
   }
 
-  Color getColorOfLine(){
-    Color lineColor = infected_text;
-    switch(iconBoxTexts[_selectedButton]){
-      case "D": lineColor = secondary_text;break;
-      case "R": lineColor = recovered_text;break;
-      case "A": lineColor = active_text;break;
-      default: lineColor = infected_text;
-    }
-    return lineColor;
-  }
-
   String getBottomTitle(int value){
     int slab = (_countryStat.cases.length/5).floor();
     if(value>=_countryStat.cases.length) return '';
@@ -462,6 +406,66 @@ class _GraphBoxState extends State<GraphBox> {
       return d.toStringAsFixed(2) + "k";
     } else return value.toString();
 //    return '';
+  }
+
+//----------------------------------------Timing Buttons------------------------------------------//
+  Widget getTimingRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        getTimingBox(0),
+        getTimingBox(1),
+        getTimingBox(2),
+      ],
+    );
+  }
+
+  Widget getTimingBox(int index){
+    int days = 0;
+    switch(index){
+      case 0: days = getDaysFromBeginning();break;
+      case 1: days = 31;break;
+      case 2: days = 15;break;
+      default: days = 31;break;
+    }
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+        _numberOfDays = days;
+        _selectedLabel = index;
+        _countryStat = null;
+        });
+        loadData();
+      },
+      child: Container(
+        height : screenHeight(context, dividedBy: propTimingBox),
+        padding : EdgeInsets.symmetric(horizontal: screenHeight(context, dividedBy: propPaddingSmall)),
+        margin : EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: propPaddingSmall)),
+        decoration: BoxDecoration(
+          color: _selectedLabel == index?background:getColorOfLine(),
+          boxShadow: _selectedLabel == index?inner_icon_shadow:outer_icon_shadow,
+          borderRadius: BorderRadius.circular(4.0)
+        ),
+        child: Center(
+          child: Text(
+            timingBoxTexts[index],
+            style: TextStyle(color: primary_text),
+            textScaleFactor: 1.0)),
+      ),
+    );
+  }
+
+//----------------------------------------Other Functions------------------------------------------//
+
+  Color getColorOfLine(){
+    Color lineColor = infected_text;
+    switch(iconBoxTexts[_selectedButton]){
+      case "D": lineColor = secondary_text;break;
+      case "R": lineColor = recovered_text;break;
+      case "A": lineColor = active_text;break;
+      default: lineColor = infected_text;
+    }
+    return lineColor;
   }
 
   int getDaysFromBeginning(){
