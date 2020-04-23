@@ -2,6 +2,7 @@ import 'package:covid/constants.dart';
 import 'package:covid/screensize_reducer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 
 
@@ -53,7 +54,7 @@ class _OnboardScreensState extends State<OnboardScreens> {
               child: Center(
                 child: Text(
                   '"' + onboard_qoutes[index] + '"',
-                  style: TextStyle(fontFamily: 'Raleway', color: secondary_text, fontSize: 24, fontWeight: FontWeight.w500),
+                  style: TextStyle(fontFamily: 'Raleway', color: textHeadingOtherColor[index], fontSize: 24, fontWeight: FontWeight.w500),
                 ),
               ),
             ),
@@ -74,14 +75,10 @@ class _OnboardScreensState extends State<OnboardScreens> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    getRichText(onboard_headings[index]),
+                    getRichText(onboard_headings[index], index),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: propPaddingLarge)),
-                      child: Text(
-                        onboard_description[index],
-                        textAlign: TextAlign.start,
-                        style: TextStyle(color: secondary_text, fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
+                      child: getDescription(index),
                     ),
                   ],
                 ),
@@ -104,7 +101,38 @@ class _OnboardScreensState extends State<OnboardScreens> {
     );
   }
 
-  Widget getRichText(String quote){
+  Widget getDescription(int index){
+    if(index != 2){
+      return Text(
+        onboard_description[index],
+        textAlign: TextAlign.start,
+        style: TextStyle(color: textHeadingOtherColor[index], fontSize: 15, fontWeight: FontWeight.bold),
+      );
+    }
+    return Center(
+      child: GestureDetector(
+        onTap: () {
+          HapticFeedback.heavyImpact();
+          print("Button Pressed");
+        },
+        child: Container(
+          width: screenWidth(context,dividedBy: 2.5),
+          padding : EdgeInsets.all(screenHeight(context, dividedBy: propPaddingSmall)),
+          margin : EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: propPaddingLarge)),
+          decoration: BoxDecoration(
+            color: background,
+            boxShadow: outer_shadow,
+            borderRadius: BorderRadius.circular(4.0)
+          ),
+          child: Center(
+            child: getRichText("Let's Go", 3)
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget getRichText(String quote, int index){
     List<String> words = quote.split(" ");
     List<TextSpan> spans = new List();
 
@@ -113,17 +141,21 @@ class _OnboardScreensState extends State<OnboardScreens> {
       String other = word.substring(1) + " ";
       spans.add(new TextSpan(
         text: first,
-        style: TextStyle(color: orange)
+        style: TextStyle(
+          color: orange
+        )
       ));
       spans.add(new TextSpan(
         text: other,
-        style: TextStyle(color: primary_text)
+        style: TextStyle(
+          color: textHeadingOtherColor[index]
+        )
       ));
     });
 
     return new RichText(
       text: TextSpan(
-        style: TextStyle(fontFamily: 'Raleway', fontSize: 40, letterSpacing: 2, fontWeight: FontWeight.w800),
+        style: TextStyle(fontFamily: 'Raleway', fontSize: index==3?20:40, letterSpacing: 2, fontWeight: FontWeight.w800),
         children: spans
       )
     );

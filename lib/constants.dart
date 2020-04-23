@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 //-----------------------------------Colors----------------------------------//
 const primary = const Color(0xff121212);
 const background =  Color.fromRGBO(19,21,23,1.0);
-const background2 =  Color.fromRGBO(20,20,20,1.0);
 const search_bar_colour = const Color.fromRGBO(34,36,45,1.0);
 const box_gradient_top = const Color(0xff1B1E27);
 const box_gradient_bottom = const Color(0xff121212);
@@ -19,9 +18,13 @@ const topShadow = const Color.fromRGBO(255, 250, 250, 0.2);
 const bottomShadow = const Color.fromRGBO(0, 0, 0, 0.75);
 
 const onboardA =  Color.fromRGBO(19,21,23,1.0);
-const onboardB =  Color.fromRGBO(19,21,23,1.0);
-const onboardC =  Color.fromRGBO(19,21,23,1.0);
+const onboardB =  Color.fromRGBO(255,255,255,1.0);
+const onboardC =  onboardA;
 
+const alternate_text = Color.fromRGBO(19,21,23,0.7);
+
+//const textHeadingColor = [orange, onboardA, orange];
+const textHeadingOtherColor = [primary_text, alternate_text, primary_text, primary_text];
 
 //----------------------------------Gradients---------------------------------//
 const backgroud_gradient = const LinearGradient(
@@ -179,11 +182,11 @@ const iconBoxTexts = ["I", "D", "R", "A"];
 const selectedChartHeading = ["Cumulative", "Daily"];
 
 //----------------------------------Arrays---------------------------------//
-const onboard_qoutes = ["Ignorance isn't bliss always", "Curves only look good on bodies", "Save the world by staying at home"];
+const onboard_qoutes = ["Ignorance isn't bliss always", "Stay ahead of the curve, always", "Save the world by staying at home"];
 const onboard_headings = ["Know the figures", "Flatten the curve", "It's time to start"];
 const onboard_description = [
-  "Real time updates from data curated by John Hopkins University. View the trends of the Covid-19 strain worldwide or in your own country.",
-  "",
+  "Real time updates from data curated by John Hopkins University. View the numbers of the Covid-19 strain worldwide or in your own country.",
+  "Visualize the curves that everyone is trying to flatten. Data from 22nd January are available to view as line and bar charts.",
   ""
 ];
 
