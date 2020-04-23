@@ -1,9 +1,11 @@
+import 'package:covid/Database/database_client.dart';
+import 'package:covid/Helpers/api.dart';
 import 'package:covid/constants.dart';
 import 'package:covid/screensize_reducer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class OnboardScreens extends StatefulWidget {
@@ -15,12 +17,21 @@ class OnboardScreens extends StatefulWidget {
 
 class _OnboardScreensState extends State<OnboardScreens> {
   int _selectedScreen = 0;
+  final DatabaseClient db = DatabaseClient.instance;
+  final API api = new API();
 
-  void pageChanged(int page){
-    setState(() {
-      _selectedScreen = page;
-    });
+  void populateDatabase(BuildContext context) async {
+    await db.populateCountries(context);
   }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    populateDatabase(context);
+    api.fetchAllStats();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LiquidSwipe(
@@ -30,6 +41,18 @@ class _OnboardScreensState extends State<OnboardScreens> {
       fullTransitionValue: 600.0,
       onPageChangeCallback: this.pageChanged
     );
+  }
+
+  void goToHomeScreen() {
+    Navigator.pop(context);
+    Navigator.pushNamed(context, '/app');
+  }
+
+
+  void pageChanged(int page){
+    setState(() {
+      _selectedScreen = page;
+    });
   }
 
   List<Container> getPages(BuildContext context){
@@ -113,7 +136,7 @@ class _OnboardScreensState extends State<OnboardScreens> {
       child: GestureDetector(
         onTap: () {
           HapticFeedback.heavyImpact();
-          print("Button Pressed");
+          goToHomeScreen();
         },
         child: Container(
           width: screenWidth(context,dividedBy: 2.5),

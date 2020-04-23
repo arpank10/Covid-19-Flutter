@@ -1,5 +1,5 @@
 import 'package:covid/Widgets/home.dart';
-import 'package:covid/Widgets/onboarding.dart';
+import 'package:covid/Widgets/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:covid/constants.dart';
@@ -9,7 +9,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,8 +31,10 @@ class MyApp extends StatelessWidget {
           bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
         ),
       ),
-//      home: Home(title: 'Covid 19'),
-      home: OnboardScreens(),
+      home: Splash(),
+      routes: {
+        '/app': (context) => Home(),
+      },
     );
   }
 }

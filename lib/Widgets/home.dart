@@ -26,24 +26,10 @@ class _HomeState extends State<Home> {
   IconData _currentSelected = CustomIcon.home;
   Country country;
   Future<Country> futureCountry;
-  final DatabaseClient db = DatabaseClient.instance;
-  final API api = new API();
 
   @override
   void initState() {
     super.initState();
-    api.fetchAllStats();
-    populateDatabase(context);
-
-  }
-
-  void populateDatabase(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isFirstTime = prefs.getBool('firstTime') ?? true;
-    if(isFirstTime){
-      prefs.setBool('firstTime', false);
-      await db.populateCountries(context);
-    }
   }
 
   @override
