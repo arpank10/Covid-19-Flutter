@@ -58,8 +58,8 @@ class _OnboardScreensState extends State<OnboardScreens> {
   List<Container> getPages(BuildContext context){
     List<Container> pages = new List();
     pages.add(getPage(onboardA, 'assets/world.png', 0, context));
-    pages.add(getPage(onboardB, 'assets/chart-1.png', 1, context));
-    pages.add(getPage(onboardC, 'assets/world.png', 2, context));
+    pages.add(getPage(onboardB, 'assets/chart.png', 1, context));
+    pages.add(getPage(onboardC, 'assets/home.png', 2, context));
     return pages;
   }
 
