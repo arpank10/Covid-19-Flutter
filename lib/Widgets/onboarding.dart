@@ -57,9 +57,9 @@ class _OnboardScreensState extends State<OnboardScreens> {
 
   List<Container> getPages(BuildContext context){
     List<Container> pages = new List();
-    pages.add(getPage(onboardA, 'assets/world-2.png', 0, context));
-    pages.add(getPage(onboardB, 'assets/chart.png', 1, context));
-    pages.add(getPage(onboardC, 'assets/world-1.png', 2, context));
+    pages.add(getPage(onboardA, 'assets/world.png', 0, context));
+    pages.add(getPage(onboardB, 'assets/chart-1.png', 1, context));
+    pages.add(getPage(onboardC, 'assets/world.png', 2, context));
     return pages;
   }
 
@@ -74,10 +74,14 @@ class _OnboardScreensState extends State<OnboardScreens> {
           children: <Widget>[
             Expanded(
               flex: flexTopQuote,
-              child: Center(
-                child: Text(
-                  '"' + onboard_qoutes[index] + '"',
-                  style: TextStyle(fontFamily: 'Raleway', color: textHeadingOtherColor[index], fontSize: 24, fontWeight: FontWeight.w500),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: propPaddingLarge)),
+                child: Center(
+                  child: Text(
+                    '"' + onboard_qoutes[index] + '"',
+                    textScaleFactor: 1.0,
+                    style: TextStyle(fontFamily: 'Raleway', fontStyle:FontStyle.italic, color: textHeadingOtherColor[index], fontSize: 24, fontWeight: FontWeight.w500),
+                  ),
                 ),
               ),
             ),
@@ -96,7 +100,7 @@ class _OnboardScreensState extends State<OnboardScreens> {
                 padding: EdgeInsets.all(screenWidth(context, dividedBy: 10.0)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     getRichText(onboard_headings[index], index),
                     Padding(
@@ -129,6 +133,7 @@ class _OnboardScreensState extends State<OnboardScreens> {
       return Text(
         onboard_description[index],
         textAlign: TextAlign.start,
+        textScaleFactor: 1.0,
         style: TextStyle(color: textHeadingOtherColor[index], fontSize: 15, fontWeight: FontWeight.bold),
       );
     }
@@ -159,6 +164,9 @@ class _OnboardScreensState extends State<OnboardScreens> {
     List<String> words = quote.split(" ");
     List<TextSpan> spans = new List();
 
+    double fontSize = screenHeight(context, dividedBy: 25.0);
+    if(index==3) fontSize = fontSize/2;
+
     words.forEach((word) {
       String first = word[0];
       String other = word.substring(1) + " ";
@@ -178,9 +186,10 @@ class _OnboardScreensState extends State<OnboardScreens> {
 
     return new RichText(
       text: TextSpan(
-        style: TextStyle(fontFamily: 'Raleway', fontSize: index==3?20:40, letterSpacing: 2, fontWeight: FontWeight.w800),
+        style: TextStyle(fontFamily: 'Raleway', fontSize: fontSize, letterSpacing: 2, fontWeight: FontWeight.w800),
         children: spans
-      )
+      ),
+      textScaleFactor: 1.0,
     );
   }
 

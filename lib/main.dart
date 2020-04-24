@@ -1,4 +1,5 @@
 import 'package:covid/Widgets/home.dart';
+import 'package:covid/Widgets/onboarding.dart';
 import 'package:covid/Widgets/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
           bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
         ),
       ),
-      home: Splash(),
+      home: OnboardScreens(),
       routes: {
         '/app': (context) => Home(),
       },
