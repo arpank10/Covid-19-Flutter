@@ -1,0 +1,26 @@
+{
+  "Links": [
+    {
+      "text": "WHO WhatsApp Link",
+      "url" : "whatsapp://send?phone=41798931892?text=hi"
+    },
+    {
+      "text": "Advice for Public",
+      "url" : "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public"
+    },
+    {
+      "text": "Myth Busters",
+      "url" : "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/myth-busters"
+    },
+    {
+      "text": "Q & A",
+      "url" : "https://www.who.int/news-room/q-a-detail/q-a-coronaviruses"
+    }
+  ],
+  "Precautions": [
+
+  ],
+  "Helplines": [
+
+  ]
+}

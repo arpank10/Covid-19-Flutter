@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/CustomIcon.ttf
 ///
-///
+/// 
 ///
 import 'package:flutter/widgets.dart';
 
@@ -30,5 +30,7 @@ class CustomIcon {
   static const IconData active = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData line_chart = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData bar_chart = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData left = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData right = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData global = IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
