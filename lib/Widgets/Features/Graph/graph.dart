@@ -3,13 +3,11 @@ import 'dart:math';
 import 'package:covid/Database/cases.dart';
 import 'package:covid/Database/country.dart';
 import 'package:covid/Helpers/api.dart';
-import 'package:covid/Widgets/custom_icons.dart';
-import 'package:covid/Widgets/text_box.dart';
-import 'package:covid/screensize_reducer.dart';
+import 'package:covid/Helpers/constants.dart';
+import 'package:covid/Helpers/screensize_reducer.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:covid/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 

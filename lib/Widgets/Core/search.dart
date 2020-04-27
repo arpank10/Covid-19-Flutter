@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:covid/Database/country.dart';
 import 'package:covid/Database/database_client.dart';
-import 'package:covid/screensize_reducer.dart';
+import 'file:///E:/Android/Self/covid/lib/Helpers/screensize_reducer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:covid/constants.dart';
+import 'file:///E:/Android/Self/covid/lib/Helpers/constants.dart';
 
 
 class SearchBar extends StatefulWidget {

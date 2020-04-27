@@ -1,6 +1,6 @@
-import 'package:covid/screensize_reducer.dart';
+import 'file:///E:/Android/Self/covid/lib/Helpers/screensize_reducer.dart';
 import 'package:flutter/material.dart';
-import 'package:covid/constants.dart';
+import 'file:///E:/Android/Self/covid/lib/Helpers/constants.dart';
 
 
 class DetailBox extends StatefulWidget {

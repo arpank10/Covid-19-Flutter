@@ -1,7 +1,7 @@
 import 'package:covid/Database/country.dart';
 import 'package:covid/Database/database_client.dart';
-import 'package:covid/Widgets/box.dart';
-import 'package:covid/Widgets/custom_icons.dart';
+import 'package:covid/Widgets/Core/box.dart';
+import 'package:covid/Widgets/Core/custom_icons.dart';
 import 'package:flutter/material.dart';
 
 class StatBox extends StatefulWidget {

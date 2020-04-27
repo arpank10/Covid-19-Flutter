@@ -1,9 +1,9 @@
-import 'package:covid/Widgets/home.dart';
-import 'package:covid/Widgets/onboarding.dart';
-import 'package:covid/Widgets/splash_screen.dart';
+import 'file:///E:/Android/Self/covid/lib/Widgets/Pages/home.dart';
+import 'file:///E:/Android/Self/covid/lib/Widgets/Pages/onboarding.dart';
+import 'file:///E:/Android/Self/covid/lib/Widgets/Pages/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:covid/constants.dart';
+import 'file:///E:/Android/Self/covid/lib/Helpers/constants.dart';
 
 void main() {
   runApp(MyApp());

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:covid/Database/database_client.dart';
 import 'package:covid/Helpers/api.dart';
-import 'package:covid/Widgets/home.dart';
-import 'package:covid/Widgets/onboarding.dart';
+import 'file:///E:/Android/Self/covid/lib/Widgets/Pages/home.dart';
+import 'file:///E:/Android/Self/covid/lib/Widgets/Pages/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

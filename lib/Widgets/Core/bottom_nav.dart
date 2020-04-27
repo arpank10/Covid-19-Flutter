@@ -1,10 +1,11 @@
-import 'package:covid/Widgets/custom_icons.dart';
-import 'package:covid/Widgets/icon_box.dart';
+import 'package:covid/Helpers/constants.dart';
+import 'package:covid/Helpers/screensize_reducer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:covid/constants.dart';
-import 'package:covid/screensize_reducer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'custom_icons.dart';
+import 'icon_box.dart';
 
 
 class BottomNav extends StatefulWidget {

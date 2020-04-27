@@ -1,7 +1,7 @@
 import 'package:covid/Database/database_client.dart';
 import 'package:covid/Helpers/api.dart';
-import 'package:covid/constants.dart';
-import 'package:covid/screensize_reducer.dart';
+import 'file:///E:/Android/Self/covid/lib/Helpers/constants.dart';
+import 'file:///E:/Android/Self/covid/lib/Helpers/screensize_reducer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';

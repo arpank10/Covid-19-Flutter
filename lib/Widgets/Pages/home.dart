@@ -1,16 +1,16 @@
 import 'package:covid/Database/country.dart';
 import 'package:covid/Database/database_client.dart';
 import 'package:covid/Helpers/api.dart';
-import 'package:covid/Widgets/bottom_nav.dart';
-import 'package:covid/Widgets/country_stat.dart';
-import 'package:covid/Widgets/custom_icons.dart';
-import 'package:covid/Widgets/graph.dart';
-import 'package:covid/Widgets/search.dart';
-import 'package:covid/screensize_reducer.dart';
+import 'package:covid/Helpers/constants.dart';
+import 'package:covid/Helpers/screensize_reducer.dart';
+import 'package:covid/Widgets/Core/bottom_nav.dart';
+import 'package:covid/Widgets/Core/custom_icons.dart';
+import 'package:covid/Widgets/Core/search.dart';
+import 'package:covid/Widgets/Features/Graph/graph.dart';
+import 'package:covid/Widgets/Features/Stats/country_stat.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:covid/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
