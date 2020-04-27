@@ -72,7 +72,7 @@ const innerBlurIconSpread = 1.0;
 //----------------------------------proportions---------------------------------//
 //top
 const propTitleText = 40.0;
-const propSearchElement = 10.0;
+const propSearchElement = 18.0;
 const propCurrentCountry = 20.0;
 const propGlobalIcon = 30.0;
 
@@ -95,11 +95,16 @@ const propTextBox = 25.0;
 const propTimingBox = 30.0;
 const propTopPadding = 20.0;
 
+//Contacts Page
+const propCurrentBox = 18.0;
+const propContactsBox = 2.0;
+
 //Flex values
 const flexTopQuote = 5;
 const flexImage = 7;
 const flexHeading = 6;
 const flexIndicators = 3;
+
 
 //----------------------------------Shadows---------------------------------//
 const outer_shadow = const [

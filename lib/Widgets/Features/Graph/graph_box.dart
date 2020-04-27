@@ -43,6 +43,13 @@ class _GraphBoxState extends State<GraphBox> {
   }
 
   @override
+  void setState(fn) {
+    // TODO: implement setState
+    if(this.mounted)
+      super.setState(fn);
+  }
+
+  @override
   void initState() {
     super.initState();
     loadData();

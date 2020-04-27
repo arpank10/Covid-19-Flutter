@@ -121,6 +121,7 @@ class _HomeState extends State<Home> {
       case 1: return Graph(country: _country,onCountryChanged:this.onCountryChanged);
       case 2: return Contacts();
     }
+    return Contacts();
   }
 
 }

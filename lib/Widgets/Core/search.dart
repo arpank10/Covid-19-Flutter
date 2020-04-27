@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:covid/Database/country.dart';
 import 'package:covid/Database/database_client.dart';
-import 'file:///E:/Android/Self/covid/lib/Helpers/screensize_reducer.dart';
+import 'package:covid/Helpers/constants.dart';
+import 'package:covid/Helpers/screensize_reducer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///E:/Android/Self/covid/lib/Helpers/constants.dart';
 
 
 class SearchBar extends StatefulWidget {
@@ -84,11 +84,12 @@ class _SearchBarState extends State<SearchBar> {
           margin: EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: propPaddingLarge)),
           height: screenHeight(context, dividedBy: propTitleText),
           child: Center(
-            child: Text("Covid 19"),
+            child: Text(app_title),
           ),
         ),
         Container(
           margin: EdgeInsets.fromLTRB(margin, 0.0, margin, margin),
+          height: screenHeight(context, dividedBy: propSearchElement),
           decoration: BoxDecoration(
             color: search_bar_colour,
             boxShadow: inner_shadow,
