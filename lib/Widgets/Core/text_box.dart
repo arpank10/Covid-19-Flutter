@@ -1,6 +1,6 @@
-import 'file:///E:/Android/Self/covid/lib/Helpers/screensize_reducer.dart';
+import 'package:covid/Helpers/constants.dart';
+import 'package:covid/Helpers/screensize_reducer.dart';
 import 'package:flutter/material.dart';
-import 'file:///E:/Android/Self/covid/lib/Helpers/constants.dart';
 
 class TextBox extends StatefulWidget {
   TextBox({Key key,

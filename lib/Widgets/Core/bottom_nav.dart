@@ -14,7 +14,7 @@ class BottomNav extends StatefulWidget {
     @required this.onIconSelected
   }) : super(key: key);
 
-  final Function (IconData) onIconSelected;
+  final Function (int) onIconSelected;
 
   @override
   _BottomNavState createState() => _BottomNavState();
@@ -22,12 +22,12 @@ class BottomNav extends StatefulWidget {
 
 class _BottomNavState extends State<BottomNav> {
 
-  IconData _selected = CustomIcon.home;
+  int _selected = 0;
 
-  void onIconSelected(IconData icon){
-    if(_selected!=icon){
+  void onIconSelected(int index){
+    if(_selected!=index){
       setState(() {
-        _selected = icon;
+        _selected = index;
       });
       widget.onIconSelected(_selected);
     }
@@ -56,19 +56,19 @@ class _BottomNavState extends State<BottomNav> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   IconBox(
-                    icon: CustomIcon.home,
+                    index: 0,
                     onIconSelected: this.onIconSelected,
-                    active: _selected==CustomIcon.home,
+                    active: _selected==0,
                   ),
                   IconBox(
-                    icon: CustomIcon.stats,
+                    index: 1,
                     onIconSelected: this.onIconSelected,
-                    active: _selected==CustomIcon.stats,
+                    active: _selected==1,
                   ),
                   IconBox(
-                    icon: CustomIcon.contacts,
+                    index: 2,
                     onIconSelected: this.onIconSelected,
-                    active: _selected==CustomIcon.contacts,
+                    active: _selected==2,
                   ),
                 ],
               ),

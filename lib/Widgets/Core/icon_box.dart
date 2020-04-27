@@ -1,17 +1,17 @@
-import 'file:///E:/Android/Self/covid/lib/Helpers/screensize_reducer.dart';
+import 'package:covid/Helpers/constants.dart';
+import 'package:covid/Helpers/screensize_reducer.dart';
 import 'package:flutter/material.dart';
-import 'file:///E:/Android/Self/covid/lib/Helpers/constants.dart';
 
 class IconBox extends StatefulWidget {
   IconBox({Key key,
-    @required this.icon,
+    @required this.index,
     @required this.onIconSelected,
     @required this.active
   }) : super(key: key);
 
-  final IconData icon;
+  final int index;
   final bool active;
-  final Function (IconData) onIconSelected;
+  final Function (int) onIconSelected;
 
   @override
   _IconBoxState createState() => _IconBoxState();
@@ -24,7 +24,7 @@ class _IconBoxState extends State<IconBox> {
   Widget build(BuildContext context) {
 
     return GestureDetector(
-      onTap: () => widget.onIconSelected(widget.icon),
+      onTap: () => widget.onIconSelected(widget.index),
       child: Container(
         margin: EdgeInsets.all(10.0),
         height: screenHeight(context, dividedBy: propBottomIcon),
@@ -37,7 +37,7 @@ class _IconBoxState extends State<IconBox> {
         ),
         child: Center(
           child: Icon(
-            widget.icon,
+            bottom_nav_icons[widget.index],
             size: screenHeight(context, dividedBy: propBottomIcon*2.0),
             color: faded_orange,
           ),

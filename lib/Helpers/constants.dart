@@ -1,5 +1,10 @@
+import 'package:covid/Widgets/Core/custom_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+
+const app_title = "Covid 19";
+
 
 //-----------------------------------Colors----------------------------------//
 const primary = const Color(0xff121212);
@@ -199,3 +204,5 @@ const BASE2_URL = "https://corona.lmao.ninja/";
 const summary = "summary";
 const globalData = "v2/historical/all?lastdays=";
 const countryWise = "v2/historical/";
+
+const bottom_nav_icons = [CustomIcon.home, CustomIcon.stats, CustomIcon.contacts];
