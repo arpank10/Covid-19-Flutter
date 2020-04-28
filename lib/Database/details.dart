@@ -34,3 +34,23 @@ class Precaution{
     return precaution;
   }
 }
+
+class Helpline {
+  String title;
+  String number;
+  String cc;
+
+  Helpline(String title, String number, String cc){
+    this.title = title;
+    this.number = number;
+    this.cc = cc;
+  }
+
+  factory Helpline.fromJson(dynamic json) {
+    String title = json['title'];
+    String number = json['number'];
+    String cc = json['cc'];
+    Helpline helpline = new Helpline(title, number, cc);
+    return helpline;
+  }
+}

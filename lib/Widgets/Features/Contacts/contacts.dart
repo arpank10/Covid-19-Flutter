@@ -234,26 +234,38 @@ class _ContactsState extends State<Contacts> {
         if(snapshot.hasData){
           String data = snapshot.data;
 
-          var linksObject = jsonDecode(data)["Links"] as List;
-          List<Link> links = linksObject.map((linkJson) => Link.fromJson(linkJson)).toList();
+          var helplineObject = jsonDecode(data)["Helplines"] as List;
+          List<Helpline> helplines = helplineObject.map((helplineJson) => Helpline.fromJson(helplineJson)).toList();
 
           return Scrollbar(
-            child: ListView.builder(
-              itemCount: links.length,
+            child: ListView.separated(
+              itemCount: helplines.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   title: Text(
-                    links[index].text,
+                    helplines[index].title,
                     style: TextStyle(
-                      color: orange,
-                      decoration: TextDecoration.underline,
+                      color: faded_orange,
+                      fontFamily: "Raleway",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0
                     ),
                   ),
-                  onTap: (){
-                    _launchURL(links[index].url);
-                  },
+                  trailing: IconButton(
+                    icon: Icon(
+                      CustomIcon.contacts,
+                      color: orange,
+                    ),
+                    onPressed: (){
+                      _launchURL("tel:"+helplines[index].number);
+                      HapticFeedback.heavyImpact();
+                    },
+                  ),
                 );
-              }
+              },
+              separatorBuilder: (context, index){
+                return Divider();
+              },
             ),
           );
         }
