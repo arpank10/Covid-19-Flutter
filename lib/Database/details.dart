@@ -13,5 +13,24 @@ class Link{
     Link link = new Link(text, url);
     return link;
   }
+}
 
+class Precaution{
+  String text;
+  String image;
+  String description;
+
+  Precaution(String text, String image, String description){
+    this.text = text;
+    this.image = image;
+    this.description = description;
+  }
+
+  factory Precaution.fromJson(dynamic json) {
+    String text = json['title'];
+    String image = json['image'];
+    String description = json['description'];
+    Precaution precaution = new Precaution(text, image, description);
+    return precaution;
+  }
 }

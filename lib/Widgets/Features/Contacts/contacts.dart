@@ -155,11 +155,113 @@ class _ContactsState extends State<Contacts> {
   }
 
   Widget getPrecautions(){
+    return FutureBuilder(
+      future: jsonData,
+      builder: (context, snapshot) {
+        if(snapshot.hasData){
+          String data = snapshot.data;
 
+          var precautionObjects = jsonDecode(data)["Precautions"] as List;
+          List<Precaution> precautions = precautionObjects.map((precautionJson) => Precaution.fromJson(precautionJson)).toList();
+
+          return Scrollbar(
+            child: ListView.builder(
+              itemCount: precautions.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  height: screenHeight(context, dividedBy: propPrecautionTile) - screenHeight(context, dividedBy: propPaddingSmall),
+                  padding: EdgeInsets.all(screenHeight(context, dividedBy: propPaddingLarge)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+                    children: <Widget>[
+                      index%2==0?getRowImage(precautions[index].image):getRowText(precautions[index].text, precautions[index].description),
+                      index%2==1?getRowImage(precautions[index].image):getRowText(precautions[index].text, precautions[index].description),
+                    ],
+                  ),
+                );
+              }
+            ),
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+    );
+  }
+
+  Widget getRowImage(String image){
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: screenHeight(context, dividedBy: propPaddingLarge)),
+      child: Image(
+        height: screenHeight(context, dividedBy: propPrecautionImage),
+        width: screenHeight(context, dividedBy: propPrecautionImage),
+        image: AssetImage(image),
+        fit: BoxFit.fill,
+      ),
+    );
+  }
+
+  Widget getRowText(String title, String description){
+    return Flexible(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(
+              color: faded_orange,
+              fontSize: 15.0
+            ),
+            textScaleFactor: 1.0,
+          ),
+          Text(
+            description,
+            style: TextStyle(fontSize:13.0,color: secondary_text.withOpacity(0.50)),
+            textScaleFactor: 1.0,
+          ),
+        ],
+      ),
+    );
   }
 
   Widget getHelplines(){
+    return FutureBuilder(
+      future: jsonData,
+      builder: (context, snapshot) {
+        if(snapshot.hasData){
+          String data = snapshot.data;
 
+          var linksObject = jsonDecode(data)["Links"] as List;
+          List<Link> links = linksObject.map((linkJson) => Link.fromJson(linkJson)).toList();
+
+          return Scrollbar(
+            child: ListView.builder(
+              itemCount: links.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text(
+                    links[index].text,
+                    style: TextStyle(
+                      color: orange,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                  onTap: (){
+                    _launchURL(links[index].url);
+                  },
+                );
+              }
+            ),
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+    );
   }
 
   _launchURL(String url) async {

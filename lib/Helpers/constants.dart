@@ -98,6 +98,8 @@ const propTopPadding = 20.0;
 //Contacts Page
 const propCurrentBox = 18.0;
 const propContactsBox = 2.0;
+const propPrecautionTile = 8.0;
+const propPrecautionImage = 10.0;
 
 //Flex values
 const flexTopQuote = 5;
