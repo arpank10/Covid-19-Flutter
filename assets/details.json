@@ -29,6 +29,16 @@
       "text": "India Helpline",
       "url" : "tel:01123978046",
       "type": "1"
+    },
+    {
+      "text": "Worldwide COVID Tracker",
+      "url" : "https://www.arcgis.com/apps/opsdashboard/index.html#/85320e2ea5424dfaaa75ae62e5c06e61",
+      "type": "0"
+    },
+    {
+      "text": "India COVID Tracker",
+      "url" : "https://www.covid19india.org/",
+      "type": "0"
     }
   ],
   "Precautions": [

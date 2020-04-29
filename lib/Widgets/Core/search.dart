@@ -6,6 +6,7 @@ import 'package:covid/Helpers/constants.dart';
 import 'package:covid/Helpers/screensize_reducer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 
 class SearchBar extends StatefulWidget {
@@ -121,7 +122,10 @@ class _SearchBarState extends State<SearchBar> {
         tempFilterList = allCountryList;
       }
       for (int i = 0; i < tempFilterList.length; i++) {
-        if(tempFilterList[i].country.toLowerCase().contains(_searchText.toLowerCase())){
+        if(tempFilterList[i].country.toLowerCase().contains(_searchText.toLowerCase())
+          || tempFilterList[i].slug.toLowerCase().contains(_searchText.toLowerCase())
+        || tempFilterList[i].iso2.toLowerCase().contains(_searchText.toLowerCase())
+        ){
           tempList.add(tempFilterList[i]);
           print(tempFilterList[i].country);
         }
@@ -148,7 +152,9 @@ class _SearchBarState extends State<SearchBar> {
             ),
             onTap: (){
               _controller.clear();
+              _focusNode.unfocus();
               this.sendCountryToParent(tempFilterList[index]);
+              HapticFeedback.heavyImpact();
             },
           ),
         );

@@ -127,36 +127,34 @@ class _ContactsState extends State<Contacts> {
           var linksObject = jsonDecode(data)["Links"] as List;
           List<Link> links = linksObject.map((linkJson) => Link.fromJson(linkJson)).toList();
 
-          return Scrollbar(
-            child: ListView.separated(
-              itemCount: links.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: Text(
-                    links[index].text,
-                    style: TextStyle(
-                      color: faded_orange,
-                      fontFamily: "Raleway",
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0
-                    ),
+          return ListView.separated(
+            itemCount: links.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                title: Text(
+                  links[index].text,
+                  style: TextStyle(
+                    color: faded_orange,
+                    fontFamily: "Raleway",
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0
                   ),
-                  trailing: IconButton(
-                    icon: Icon(
-                      linkTypes[int.parse(links[index].type)],
-                      color: orange,
-                    ),
-                    onPressed: (){
-                      _launchURL(links[index].url);
-                      HapticFeedback.heavyImpact();
-                    },
+                ),
+                trailing: IconButton(
+                  icon: Icon(
+                    linkTypes[int.parse(links[index].type)],
+                    color: orange,
                   ),
-                );
-              },
-              separatorBuilder: (context, index){
-                return Divider();
-              },
-            ),
+                  onPressed: (){
+                    _launchURL(links[index].url);
+                    HapticFeedback.heavyImpact();
+                  },
+                ),
+              );
+            },
+            separatorBuilder: (context, index){
+              return Divider();
+            },
           );
         }
         return Center(
