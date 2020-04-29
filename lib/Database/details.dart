@@ -1,16 +1,19 @@
 class Link{
   String text;
   String url;
+  String type;
 
-  Link(String text, String url){
+  Link(String text, String url, String type){
     this.text = text;
     this.url = url;
+    this.type = type;
   }
 
   factory Link.fromJson(dynamic json) {
     String text = json['text'];
     String url = json['url'];
-    Link link = new Link(text, url);
+    String type = json['type'];
+    Link link = new Link(text, url, type);
     return link;
   }
 }

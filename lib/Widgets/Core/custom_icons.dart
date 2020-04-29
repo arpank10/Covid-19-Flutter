@@ -32,5 +32,6 @@ class CustomIcon {
   static const IconData bar_chart = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData left = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData right = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData launch = IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData global = IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

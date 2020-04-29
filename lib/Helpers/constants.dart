@@ -192,7 +192,8 @@ const inner_icon_shadow = const [
 const timingBoxTexts = ["Beginning", "1 Month", "2 Weeks"];
 const iconBoxTexts = ["I", "D", "R", "A"];
 const selectedChartHeading = ["Cumulative", "Daily"];
-const currentBoxHeading = ["Important Links", "Precautions", "Helplines"];
+const currentBoxHeading = ["Important Links", "Precautions"];
+const linkTypes = [CustomIcon.launch, CustomIcon.contacts];
 
 //----------------------------------Arrays---------------------------------//
 const onboard_qoutes = ["Ignorance isn't bliss always", "Stay ahead of the curve, always", "Save the world by staying at home"];

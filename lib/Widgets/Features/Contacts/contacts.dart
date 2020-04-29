@@ -112,7 +112,7 @@ class _ContactsState extends State<Contacts> {
     switch(_currentBox){
       case 0: return getLinks();
       case 1: return getPrecautions();
-      case 2: return getHelplines();
+//      case 2: return getHelplines();
     }
     return getLinks();
   }
@@ -128,22 +128,34 @@ class _ContactsState extends State<Contacts> {
           List<Link> links = linksObject.map((linkJson) => Link.fromJson(linkJson)).toList();
 
           return Scrollbar(
-            child: ListView.builder(
+            child: ListView.separated(
               itemCount: links.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   title: Text(
                     links[index].text,
                     style: TextStyle(
-                      color: orange,
-                      decoration: TextDecoration.underline,
+                      color: faded_orange,
+                      fontFamily: "Raleway",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0
                     ),
                   ),
-                  onTap: (){
-                    _launchURL(links[index].url);
-                  },
+                  trailing: IconButton(
+                    icon: Icon(
+                      linkTypes[int.parse(links[index].type)],
+                      color: orange,
+                    ),
+                    onPressed: (){
+                      _launchURL(links[index].url);
+                      HapticFeedback.heavyImpact();
+                    },
+                  ),
                 );
-              }
+              },
+              separatorBuilder: (context, index){
+                return Divider();
+              },
             ),
           );
         }
@@ -198,7 +210,7 @@ class _ContactsState extends State<Contacts> {
         height: screenHeight(context, dividedBy: propPrecautionImage),
         width: screenHeight(context, dividedBy: propPrecautionImage),
         image: AssetImage(image),
-        fit: BoxFit.fill,
+        fit: BoxFit.scaleDown,
       ),
     );
   }
@@ -227,6 +239,7 @@ class _ContactsState extends State<Contacts> {
     );
   }
 
+/*
   Widget getHelplines(){
     return FutureBuilder(
       future: jsonData,
@@ -275,6 +288,7 @@ class _ContactsState extends State<Contacts> {
       }
     );
   }
+*/
 
   _launchURL(String url) async {
     if (await canLaunch(url)) {

@@ -2,93 +2,58 @@
   "Links": [
     {
       "text": "WHO WhatsApp Link",
-      "url" : "whatsapp://send?phone=41798931892?text=hi"
+      "url" : "whatsapp://send?phone=41798931892?text=hi",
+      "type": "0"
     },
     {
       "text": "Advice for Public",
-      "url" : "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public"
+      "url" : "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public",
+      "type": "0"
     },
     {
       "text": "Myth Busters",
-      "url" : "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/myth-busters"
+      "url" : "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/myth-busters",
+      "type": "0"
     },
     {
       "text": "Q & A",
-      "url" : "https://www.who.int/news-room/q-a-detail/q-a-coronaviruses"
+      "url" : "https://www.who.int/news-room/q-a-detail/q-a-coronaviruses",
+      "type": "0"
     },
     {
       "text": "State-Wise HelpLine Numbers India",
-      "url" : "https://www.mohfw.gov.in/pdf/coronvavirushelplinenumber.pdf"
+      "url" : "https://www.mohfw.gov.in/pdf/coronvavirushelplinenumber.pdf",
+      "type": "0"
+    },
+    {
+      "text": "India Helpline",
+      "url" : "tel:01123978046",
+      "type": "1"
     }
   ],
   "Precautions": [
     {
       "title": "Stay at Home",
-      "image": "assets/chart.png",
+      "image": "assets/home1.png",
       "description": "The best way to prevent illness is to avoid being exposed to this virus. And the best to ensure that is to stay at home."
     },
     {
       "title": "Wash your hands often",
-      "image": "assets/home.png",
+      "image": "assets/wash.png",
       "description": "Wash your hands frequently for atleast 20 seconds thoroughly. Avoid touching your eyes, nose and mouth with unwashed hands."
     },
     {
       "title": "Wear a cloth face mask",
-      "image": "assets/home.png",
+      "image": "assets/mask.png",
       "description": "If at all you need to step out of your home, wearing a cloth face mask is recommended in situations where social distancing is difficult."
     },
     {
       "title": "Cover coughs and sneezes",
-      "image": "assets/home.png",
+      "image": "assets/elbow.png",
       "description": "Always cover your mouth with a tissue or elbow while coughing or sneezing. Dispose off the tissues and wash your hands thoroughly."
     }
   ],
   "Helplines": [
-    {
-      "title": "India Helpline",
-      "cc": "+91",
-      "number": "01123978046"
-    },
-    {
-      "title": "India Helpline",
-      "cc": "+91",
-      "number": "01123978046"
-    },
-    {
-      "title": "India Helpline",
-      "cc": "+91",
-      "number": "01123978046"
-    },
-    {
-      "title": "India Helpline",
-      "cc": "+91",
-      "number": "01123978046"
-    },
-    {
-      "title": "India Helpline",
-      "cc": "+91",
-      "number": "01123978046"
-    },
-    {
-      "title": "India Helpline",
-      "cc": "+91",
-      "number": "01123978046"
-    },
-    {
-      "title": "India Helpline",
-      "cc": "+91",
-      "number": "01123978046"
-    },
-    {
-      "title": "India Helpline",
-      "cc": "+91",
-      "number": "01123978046"
-    },
-    {
-      "title": "India Helpline",
-      "cc": "+91",
-      "number": "01123978046"
-    },
     {
       "title": "India Helpline",
       "cc": "+91",
