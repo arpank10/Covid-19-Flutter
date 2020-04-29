@@ -44,15 +44,20 @@ class _ContactsState extends State<Contacts> {
             height: screenHeight(context, dividedBy: propCurrentBox),
             child: getCurrentBoxRow(),
           ),
-          Container(
-            margin: EdgeInsets.all(screenHeight(context, dividedBy: propPaddingLarge)),
-            height: screenHeight(context, dividedBy: propContactsBox) - 2*screenHeight(context, dividedBy: propPaddingLarge),
-            decoration: BoxDecoration(
-              gradient: box_background,
-              borderRadius: BorderRadius.circular(15.0),
-              boxShadow: outer_shadow,
+          AnimatedSwitcher(
+            duration: Duration(milliseconds: 300),
+            switchOutCurve: Threshold(0),
+            child: Container(
+              key: ValueKey<int>(_currentBox),
+              margin: EdgeInsets.all(screenHeight(context, dividedBy: propPaddingLarge)),
+              height: screenHeight(context, dividedBy: propContactsBox) - 2*screenHeight(context, dividedBy: propPaddingLarge),
+              decoration: BoxDecoration(
+                gradient: box_background,
+                borderRadius: BorderRadius.circular(15.0),
+                boxShadow: outer_shadow,
+              ),
+              child: getBox(),
             ),
-            child: getBox(),
           ),
         ],
       ),
@@ -208,6 +213,7 @@ class _ContactsState extends State<Contacts> {
         height: screenHeight(context, dividedBy: propPrecautionImage),
         width: screenHeight(context, dividedBy: propPrecautionImage),
         image: AssetImage(image),
+        color: faded_orange.withOpacity(0.6),
         fit: BoxFit.scaleDown,
       ),
     );
