@@ -3,11 +3,12 @@ import 'dart:convert';
 
 import 'package:covid/Database/cases.dart';
 import 'package:covid/Database/database_client.dart';
+import 'package:covid/Database/details.dart';
 import 'package:covid/Helpers/api_helper.dart';
 import 'package:covid/Helpers/app_exceptions.dart';
+import 'package:covid/Helpers/constants.dart';
 
 import '../Database/country.dart';
-import 'file:///E:/Android/Self/covid/lib/Helpers/constants.dart';
 
 
 
@@ -108,6 +109,24 @@ class API {
         caseStat.cases.add(caseCount);
       }
       return caseStat;
+
+    } on AppException {
+      throw Failure("Please try again.");
+    }
+  }
+
+  Future<Version> fetchVersionInfo() async{
+    try{
+      final requestUrl = UPDATE_CHECK_URL;
+      final responseBody = await _apiBaseHelper.get(requestUrl);
+
+
+      Version version = new Version();
+      var versionObject = jsonDecode(responseBody) as Map;
+      version.versionName = versionObject['versionName'];
+      version.versionCode = versionObject['versionCode'];
+      version.url = versionObject['url'];
+      return version;
 
     } on AppException {
       throw Failure("Please try again.");

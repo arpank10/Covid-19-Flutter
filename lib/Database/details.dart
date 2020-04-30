@@ -57,3 +57,10 @@ class Helpline {
     return helpline;
   }
 }
+
+class Version{
+  String versionName;
+  int versionCode;
+  String url;
+
+}

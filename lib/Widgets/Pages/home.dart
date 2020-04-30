@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:covid/Database/country.dart';
 import 'package:covid/Database/database_client.dart';
+import 'package:covid/Database/details.dart';
 import 'package:covid/Helpers/api.dart';
 import 'package:covid/Helpers/constants.dart';
 import 'package:covid/Helpers/screensize_reducer.dart';
@@ -13,7 +16,9 @@ import 'package:covid/Widgets/Features/Stats/stats.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   Home({Key key, this.title}) : super(key: key);
@@ -27,10 +32,87 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currentSelected = 0;
   Country _country;
+  API api = new API();
 
   @override
   void initState() {
     super.initState();
+    checkForUpdate();
+  }
+
+  void checkForUpdate() async{
+    //Get Current installed version of app
+    final PackageInfo info = await PackageInfo.fromPlatform();
+    int currentVersion = int.parse(info.buildNumber);
+
+//    int currentVersion = 0;
+
+    //Get new version
+    Version versionDetails = await api.fetchVersionInfo();
+    int latestVersion = versionDetails.versionCode;
+
+    if(currentVersion<latestVersion)
+      _showVersionDialog(context, versionDetails.url);
+  }
+
+  _showVersionDialog(context, url) async {
+    await showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+
+      return Platform.isIOS
+        ? new CupertinoAlertDialog(
+          title: Text(
+            update_title,
+            style: TextStyle(color: orange, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400, fontFamily: 'Roboto'),
+          ),
+          content: Text(
+            update_message,
+            style: TextStyle(color: secondary_text, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal, fontFamily: 'Roboto'),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(update_btnLabel),
+              onPressed: () => _launchURL(url),
+            ),
+            FlatButton(
+              child: Text(update_btnLabelCancel),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+      )
+        : new AlertDialog(
+          backgroundColor:  background,
+          title: Text(
+            update_title,
+            style: TextStyle(color: orange, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400, fontFamily: 'Roboto'),
+          ),
+          content: Text(
+            update_message,
+            style: TextStyle(color: secondary_text, fontStyle: FontStyle.normal, fontWeight: FontWeight.normal, fontFamily: 'Roboto'),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(update_btnLabel),
+              onPressed: () => _launchURL(url),
+            ),
+            FlatButton(
+              child: Text(update_btnLabelCancel),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+      );
+      },
+    );
+  }
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override

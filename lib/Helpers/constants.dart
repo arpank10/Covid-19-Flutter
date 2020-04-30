@@ -203,11 +203,20 @@ const onboard_description = [
   "Visualize the curves that everyone is trying to flatten. Data from 22nd January are available to view as line and bar charts.",
   ""
 ];
+//--------------------------------------Strings-------------------------------------//
+const update_title = "New Update Available";
+const update_message = "There is a newer version of app available, please update it now.";
+const update_btnLabel = "Update Now";
+const update_btnLabelCancel = "Later";
+
+
 
 
 //----------------------------------Api---------------------------------//
 const BASE_URL = "https://api.covid19api.com/";
-const BASE2_URL = "https://corona.lmao.ninja/";
+//const BASE2_URL = "https://corona.lmao.ninja/";
+const BASE2_URL = "https://disease.sh/";
+const UPDATE_CHECK_URL = "https://gist.githubusercontent.com/arpank10/6670a1f1e29382e73f2276715930e4fc/raw/de6084312bf1710e4fe3d4f4692b410fe7fb26be/covid_version.json";
 
 //ALL COUNTRY DATA
 const summary = "summary";
