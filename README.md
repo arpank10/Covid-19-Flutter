@@ -1,16 +1,47 @@
-# covid
+# Covid-19 Tracker
+![Platform](https://img.shields.io/badge/platforms-android-orange)
+![Version](https://img.shields.io/badge/version-1.0-blue)
 
-A new Flutter application.
+A minimal android app with a neomorphic touch, providing statistics of COVID-19 cases around the world. Detailed cumulative and daily graphs are available for all countries, along with some useful information like important links and precautions.
 
-## Getting Started
+This is the first application I have made using Flutter for android. Still a noob, so feel free to suggest any changes to make it better:sweat_smile:
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+### FEATURES :
+- Global numbers for COVID-19 updated on a frequent basis.
+- Detailed statistics for each country.
+- Cool graphs for viewing the trends in the virus strain.
+- Important Links and other necessary information
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### DOWNLOAD :
+ [Version 1](https://drive.google.com/open?id=1i8Mv7_qkTnq9JVGJ6pTyOPrr-RZXQByx)
+ 
+### TO-DO :
+- [ ] Create feature graphic
+- [ ] Publish to aptoide.com
+- [ ] Add a simple state management system like Provider
+- [ ] Cache Data
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+### SCREENSHOTS: 
+<img src="Screenshots/onboard.gif" height="400" width="200"> |
+<img src="Screenshots/ss_1.jpg" height="400" width="200"> |
+<img src="Screenshots/ss_2.jpg" height="400" width="200"> |
+<img src="Screenshots/ss_3.jpg" height="400" width="200"> |
+
+<img src="Screenshots/ss_4.jpg" height="400" width="200"> | 
+<img src="Screenshots/ss_5.jpg" height="400" width="200"> |
+<img src="Screenshots/ss_6.jpg" height="400" width="200"> 
+
+
+
+### APIs Used
+
+- https://covid19api.com/
+- https://github.com/NovelCOVID/API
+
+### Libraries Used
+- [FL Chart](https://github.com/imaNNeoFighT/fl_chart)
+- [Liquid Swipe](https://github.com/iamSahdeep/liquid_swipe_flutter)
+
+Made with <span class="heart">❤</span> by Arpan in Flutter.
