@@ -12,10 +12,10 @@ class StatBox extends StatefulWidget {
   final Country country;
 
   @override
-  _StatBoxState createState() => _StatBoxState();
+  StatBoxState createState() => StatBoxState();
 }
 
-class _StatBoxState extends State<StatBox> {
+class StatBoxState extends State<StatBox> {
   Future<Country> futureCountry;
   final DatabaseClient db = DatabaseClient.instance;
 
@@ -123,8 +123,6 @@ class _StatBoxState extends State<StatBox> {
   }
 
   void loadStats(){
-    if(widget.country== null) print("NULL country");
-    else print(widget.country.slug);
     if(widget.country == null)
       setState(() {
         futureCountry = db.fetchCountry("global");

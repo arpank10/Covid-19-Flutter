@@ -3,6 +3,7 @@ import 'package:covid/Helpers/constants.dart';
 import 'package:covid/Helpers/screensize_reducer.dart';
 import 'package:covid/Widgets/Core/custom_icons.dart';
 import 'package:covid/Widgets/Core/search.dart';
+import 'package:flutter/services.dart';
 import 'country_stat.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +13,15 @@ class Stats extends StatefulWidget {
 
   final Country country;
   final Function(Country) onCountryChanged;
+
   @override
   _StatsState createState() => _StatsState();
 }
 
 class _StatsState extends State<Stats> {
   Country country;
+  final GlobalKey<StatBoxState> _statBoxState = GlobalKey<StatBoxState>();
+
 
   @override
   void initState() {
@@ -53,6 +57,19 @@ class _StatsState extends State<Stats> {
                   IconButton(
                     icon: Center(
                       child: Icon(
+                        Icons.refresh,
+                        size: screenHeight(context, dividedBy: propGlobalIcon),
+                        color: faded_orange
+                      ),
+                    ),
+                    onPressed: (){
+                      HapticFeedback.heavyImpact();
+                      _statBoxState.currentState.loadStats();
+                    },
+                  ),
+                  IconButton(
+                    icon: Center(
+                      child: Icon(
                         CustomIcon.global,
                         size: screenHeight(context, dividedBy: propGlobalIcon),
                         color: country==null?faded_orange:(country.slug=='global'?faded_orange:secondary_text)
@@ -69,7 +86,7 @@ class _StatsState extends State<Stats> {
             ),
             Container(
               child: Center(
-                child: StatBox(country: country),
+                child: StatBox(key:_statBoxState, country: country),
               ),
             ),
           ],

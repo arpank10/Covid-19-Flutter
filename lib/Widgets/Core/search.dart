@@ -43,7 +43,6 @@ class _SearchBarState extends State<SearchBar> {
           countryList.then((value) => tempFilterList = value);
         });
         if(this._overlayEntry!=null){
-          print("removing entry");
           this._overlayEntry.remove();
           this._overlayEntry = null;
         }
@@ -57,7 +56,6 @@ class _SearchBarState extends State<SearchBar> {
             this._overlayEntry.markNeedsBuild();
           }
         });
-        print(_searchText);
       }
     });
   }
@@ -73,6 +71,8 @@ class _SearchBarState extends State<SearchBar> {
   void dispose() {
     _controller.removeListener(_onSearchChanged);
     _controller.dispose();
+    if(this._overlayEntry != null)
+      this._overlayEntry.remove();
     super.dispose();
   }
 
@@ -118,7 +118,6 @@ class _SearchBarState extends State<SearchBar> {
     if (_searchText.isNotEmpty) {
       List<Country> tempList = new List();
       if(_searchText.length < _previousLength){
-        print("Less than before");
         tempFilterList = allCountryList;
       }
       for (int i = 0; i < tempFilterList.length; i++) {
@@ -127,10 +126,8 @@ class _SearchBarState extends State<SearchBar> {
         || tempFilterList[i].iso2.toLowerCase().contains(_searchText.toLowerCase())
         ){
           tempList.add(tempFilterList[i]);
-          print(tempFilterList[i].country);
         }
       }
-      print(_searchText);
       _previousLength = _searchText.length;
       tempList.sort((a, b) => a.country.compareTo(b.country));
       tempFilterList = tempList;
@@ -167,7 +164,6 @@ class _SearchBarState extends State<SearchBar> {
     RenderBox renderBox = context.findRenderObject();
     var size = renderBox.size;
     var offset = renderBox.localToGlobal(Offset.zero);
-    print("Creating entry");
     return OverlayEntry(
       builder: (context) => Positioned(
         left: offset.dx,

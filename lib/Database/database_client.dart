@@ -29,7 +29,6 @@ class DatabaseClient {
   Future create() async {
     Directory path = await getApplicationDocumentsDirectory();
     String dbPath = Path.join(path.path, "database.db");
-    print("Create called");
     _db = await openDatabase(dbPath, version: 1, onCreate: this._create);
   }
 
@@ -78,9 +77,9 @@ class DatabaseClient {
     await create();
     List<Map> results = await _db.query(countryTableName, columns: Country.columns, where: "slug = ?", whereArgs: [slug]);
     Country country = Country.fromMap(results[0]);
-    print(slug);
-    print(country.country);
-    print(country.slug);
+//    print(slug);
+//    print(country.country);
+//    print(country.slug);
     return country;
   }
 

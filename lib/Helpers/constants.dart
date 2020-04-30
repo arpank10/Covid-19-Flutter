@@ -50,9 +50,6 @@ const box_background = const LinearGradient(
   tileMode: TileMode.clamp
 );
 
-//----------------------------------Strings---------------------------------//
-const stay = "Stay Home, Stay Safe";
-const quote = "'You can't recognize good times, if you don't have bad ones.'";
 
 //----------------------------------dimensions---------------------------------//
 const outerBlurLevel = 4.0;
@@ -203,13 +200,21 @@ const onboard_description = [
   "Visualize the curves that everyone is trying to flatten. Data from 22nd January are available to view as line and bar charts.",
   ""
 ];
+
+const bottom_qoute = [
+  '"You can\'t recognize good times, if you don\'t have bad ones."',
+  '"An ounce of prevention is worth a pound of cure"',
+  '"When "I" is replaced by "We", even illness becomes wellness"'];
+
+const bottom_heading = [
+  'Stay Home, Stay Safe',
+  'Viruses don\'t discriminate',
+  'Let\'s give it our best'];
 //--------------------------------------Strings-------------------------------------//
 const update_title = "New Update Available";
 const update_message = "There is a newer version of app available, please update it now.";
 const update_btnLabel = "Update Now";
 const update_btnLabelCancel = "Later";
-
-
 
 
 //----------------------------------Api---------------------------------//

@@ -39,7 +39,8 @@ class _GraphBoxState extends State<GraphBox> {
     _caseStat = api.fetchDataByCountry(widget.country, _numberOfDays);
     _caseStat.then((value) { setState(() {
       _countryStat = value;
-    }); print("Data loaded");});
+    });
+    });
   }
 
   @override

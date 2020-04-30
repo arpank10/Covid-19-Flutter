@@ -129,7 +129,11 @@ class _HomeState extends State<Home> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                getFeature(),
+                AnimatedSwitcher(
+                  duration: Duration(milliseconds: 100),
+                  switchOutCurve: Threshold(0),
+                  child: getFeature()
+                ),
                 Container(
                   height: screenHeight(context, dividedBy: propBottomElement),
                   child: SvgPicture.asset(
@@ -141,27 +145,31 @@ class _HomeState extends State<Home> {
                 Container(
                   margin: EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: propPaddingSmall)),
                   height: screenHeight(context, dividedBy: propBottomElement),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: screenHeight(context, dividedBy: propPaddingLarge)),
-                        child: Text(
-                          quote,
-                          style: TextStyle(fontStyle: FontStyle.italic, color: secondary_text),
-                          textScaleFactor: 1.0,
+                  child: AnimatedSwitcher(
+                    duration: Duration(milliseconds: 100),
+                    switchOutCurve: Threshold(0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: screenHeight(context, dividedBy: propPaddingLarge)),
+                          child: Text(
+                            bottom_qoute[_currentSelected],
+                            style: TextStyle(fontStyle: FontStyle.italic, color: secondary_text),
+                            textScaleFactor: 1.0,
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: screenHeight(context, dividedBy: propPaddingLarge),
-                        vertical: screenHeight(context, dividedBy: propPaddingSmall)),
-                        child: Text(
-                          stay,
-                          style: TextStyle(color: primary_text, fontWeight: FontWeight.bold),
-                          textScaleFactor: 1.0,
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: screenHeight(context, dividedBy: propPaddingLarge),
+                          vertical: screenHeight(context, dividedBy: propPaddingSmall)),
+                          child: Text(
+                            bottom_heading[_currentSelected],
+                            style: TextStyle(color: primary_text, fontWeight: FontWeight.bold),
+                            textScaleFactor: 1.0,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 getBottomNavBar()
@@ -191,7 +199,6 @@ class _HomeState extends State<Home> {
             setState(() {
               _currentSelected = index;
             });
-            print("Selection changed");
           }
         },
       ));
