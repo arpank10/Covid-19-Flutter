@@ -235,7 +235,7 @@ class _ContactsState extends State<Contacts> {
           ),
           Text(
             description,
-            style: TextStyle(fontSize:13.0,color: secondary_text.withOpacity(0.50)),
+            style: TextStyle(fontSize:10.0,color: secondary_text.withOpacity(0.50)),
             textScaleFactor: 1.0,
           ),
         ],

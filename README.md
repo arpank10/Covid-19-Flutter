@@ -6,6 +6,7 @@ A minimal android app with a neomorphic touch, providing statistics of COVID-19 
 
 This is the first application I have made using Flutter for android. Still a noob, so feel free to suggest any changes to make it better:sweat_smile:
 
+<img src="Screenshots/feature.jpg" height="200" width="400">
 
 ### FEATURES :
 - Global numbers for COVID-19 updated on a frequent basis.
@@ -14,11 +15,11 @@ This is the first application I have made using Flutter for android. Still a noo
 - Important Links and other necessary information
 
 ### DOWNLOAD :
- [Version 1](https://drive.google.com/open?id=1i8Mv7_qkTnq9JVGJ6pTyOPrr-RZXQByx)
+ [Version 1](https://drive.google.com/drive/u/0/folders/1hk0OmrRAA5cE83hTf5Sx34SsllH1F700)
  
 ### TO-DO :
-- [ ] Create feature graphic
-- [ ] Publish to aptoide.com
+- [x] Create feature graphic
+- [x] Publish to aptoide.com
 - [ ] Add a simple state management system like Provider
 - [ ] Cache Data
 
